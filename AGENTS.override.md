@@ -56,8 +56,39 @@ When the user asks you to **do** a Jira ticket, or phrasing like **“do PEX-123
 ### 6. When you implement after the plan
 
 - Follow the plan, including: **write/update unit tests**, **run tests until they pass**, **run the linter and fix issues**, and **run `oxfmt` on every file you changed** before considering the work done. Summarize commands run and outcomes in your final message.
+- Raise a **GitHub pull request** for these changes by following the GitHub pull request instructions below.
 
 ## Naming
 
 - **`TICKET`**: the Jira issue key from the user message (e.g. `PEX-123`).
 - **Branch**: always **`conner/<TICKET>`** unless the user specifies a different naming rule in that thread.
+
+## GitHub pull requests
+
+When opening or drafting a **GitHub pull request** for work tied to **`PEX-xxx`**, use **only** the following body structure. Do not add extra sections, checklists, or boilerplate unless the user asks for them in that thread.
+
+Set the pull request **title** to a concise **one-sentence** description of the changes (summarize the outcome, not every file touched).
+
+### Labels
+
+Attach the GitHub label **`security-risk-low`** to the pull request.
+
+Use these **exact** headings (`### Changes`, `### Motivation`, `### Testing`):
+
+```markdown
+### Changes
+
+<One or two short sentences describing what changed. No bullet lists unless the user asks. If the pull request title conveys the changes well enough, then just write "TIN". Typically this should just be "TIN">
+
+### Motivation
+<Just write "[PEX-xxx]" here where PEX-xxx is the actual Jira ticket ID. Be sure to include the square brackets. The Jira ticket ID can usually be parsed from the git branch name (pattern "conner/PEX-xxx")>
+
+## Testing
+<Just write "TODO">
+```
+
+Guidelines:
+
+- **Changes**: Stay to either "TIN" or **one or two sentences** total; name the behavioral or structural outcome, not every file touched.
+- **Motivation**: Always write "[PEX-xxx]" where PEX-xxx is the Jira ticket ID. If you don't know the Jira ticket ID then just write "TODO"
+- **Testing**: Always write "TODO"
