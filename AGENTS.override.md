@@ -76,11 +76,11 @@ Attach the GitHub label **`security-risk-low`** to the pull request.
 Use these **exact** headings (`### Changes`, `### Motivation`, `### Testing`):
 
 ```markdown
-### Changes
+## Changes
 
 <One or two short sentences describing what changed. No bullet lists unless the user asks. If the pull request title conveys the changes well enough, then just write "TIN". Typically this should just be "TIN">
 
-### Motivation
+## Motivation
 <Just write "[PEX-xxx]" here where PEX-xxx is the actual Jira ticket ID. Be sure to include the square brackets. The Jira ticket ID can usually be parsed from the git branch name (pattern "conner/PEX-xxx")>
 
 ## Testing
@@ -92,3 +92,4 @@ Guidelines:
 - **Changes**: Stay to either "TIN" or **one or two sentences** total; name the behavioral or structural outcome, not every file touched.
 - **Motivation**: Always write "[PEX-xxx]" where PEX-xxx is the Jira ticket ID. If you don't know the Jira ticket ID then just write "TODO"
 - **Testing**: Always write "TODO"
+- Do not include the phrase "Made-with: Cursor".
