@@ -77,14 +77,13 @@ Use these **exact** headings (`### Changes`, `### Motivation`, `### Testing`):
 
 ```markdown
 ## Changes
-
 <One or two short sentences describing what changed. No bullet lists unless the user asks. If the pull request title conveys the changes well enough, then just write "TIN". Typically this should just be "TIN">
 
 ## Motivation
 <Just write "[PEX-xxx]" here where PEX-xxx is the actual Jira ticket ID. Be sure to include the square brackets. The Jira ticket ID can usually be parsed from the git branch name (pattern "conner/PEX-xxx")>
 
 ## Testing
-<Just write "TODO">
+<Just write "CI">
 ```
 
 Guidelines:
