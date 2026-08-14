@@ -67,7 +67,7 @@ When the user asks you to **do** a Jira ticket, or phrasing like **“do PEX-123
 
 When opening or drafting a **GitHub pull request** for work tied to **`PEX-xxx`**, use **only** the following body structure. Do not add extra sections, checklists, or boilerplate unless the user asks for them in that thread.
 
-Set the pull request **title** to a concise **one-sentence** description of the changes (summarize the outcome, not every file touched).
+Set the pull request **title** to a concise **one-sentence** description of the changes (summarize the outcome, not every file touched).  If the changes touch the backend (e.g. web server, GraphQL resolvers, Mongo models, background jobs), then prefix the title with [BE]. If it touches the frontend, use [FE]. If it touches both, then prefix with [BE + FE].
 
 ### Labels
 
