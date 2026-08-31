@@ -84,6 +84,8 @@ Use these **exact** headings (`### Changes`, `### Motivation`, `### Testing`):
 
 ## Testing
 <Just write "CI">
+
+[PEX-xxx]: https://vanta.atlassian.net/browse/PEX-xxx
 ```
 
 Guidelines:
