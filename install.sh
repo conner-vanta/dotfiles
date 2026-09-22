@@ -72,6 +72,8 @@ printf '%s\n' "$JIRA_API_TOKEN" | "$ACLI_BIN" jira auth login \
   --email "$JIRA_EMAIL" \
   --token
 
+# Buildkite auth
+bk configure --org VantaInc --token $BUILDKITE_API_TOKEN --force
 
 AGENTS_OVERRIDE_FILE="/workspaces/obsidian/AGENTS.override.md"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
