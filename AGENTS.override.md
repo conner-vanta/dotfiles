@@ -46,6 +46,7 @@ When the user asks you to **do** a Jira ticket, or phrasing like **“do PEX-123
   - **Green tests**: run the relevant unit test command(s), **iterate until they pass**, and note what you ran.
   - **Linter**: run the project linter on the work, fix reported issues, and note what you ran.
   - **`oxfmt`**: run **`oxfmt`** on **all changed files** (format in place or per project convention), and list which files were formatted.
+- Consider breaking the task into multiple discrete pull requests that can be stacked on top of each other and are independently reviewable. Consider things like: if multiple teams are required to review a pull request, can we split this pull request into multiple so that each pull request only requires review from one team.  if a pull request is over 1,000 lines of code or span multiple systems owned by different teams, we should strongly prefer to split it into multiple pull requests. Think about any backward compatibility and deployment order requirements these pull requests, and fill in those details in the deployment section (see GitHub pull request template below) 
 
 ### 5. Present the plan
 
@@ -77,7 +78,7 @@ Use these **exact** headings (`### Changes`, `### Motivation`, `### Testing`):
 
 ```markdown
 ## Changes
-<One or two short sentences describing what changed. No bullet lists unless the user asks. If the pull request title conveys the changes well enough, then just write "TIN". Typically this should just be "TIN">
+<One to four short sentences describing what changed. If the pull request title conveys the changes well enough, then just write "TIN". Typically this should just be "TIN">
 
 ## Motivation
 <Just write "[PEX-xxx]: {Title of the Jira ticket}" here where PEX-xxx is the actual Jira ticket ID. Be sure to include the square brackets. The Jira ticket ID can usually be parsed from the git branch name (pattern "conner/PEX-xxx")>
@@ -86,11 +87,14 @@ Use these **exact** headings (`### Changes`, `### Motivation`, `### Testing`):
 <Just write "CI">
 
 [PEX-xxx]: https://vanta.atlassian.net/browse/PEX-xxx
+
+## Deployment
+<Document deployment order if there are any dependencies on other PRs, especially if we're creating a PR stack. Enumerate the PRs as a numbered list with each entry formatted like: "#{PR number} - deploy to prod then wait for a full deployment cycle for rollback safety OR no dependencies". If there are no dependencies, just write "No dependencies">
 ```
 
 Guidelines:
 
 - **Changes**: Stay to either "TIN" or **one or two sentences** total; name the behavioral or structural outcome, not every file touched.
 - **Motivation**: Always write "[PEX-xxx]" where PEX-xxx is the Jira ticket ID. If you don't know the Jira ticket ID then just write "TODO"
-- **Testing**: Always write "TODO"
+- **Testing**: Always write "CI"
 - Do not include the phrase "Made-with: Cursor".
