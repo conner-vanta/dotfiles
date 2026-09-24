@@ -84,7 +84,7 @@ Use these **exact** headings (`### Changes`, `### Motivation`, `### Testing`):
 <Just write "[PEX-xxx]: {Title of the Jira ticket}" here where PEX-xxx is the actual Jira ticket ID. Be sure to include the square brackets. The Jira ticket ID can usually be parsed from the git branch name (pattern "conner/PEX-xxx")>
 
 ## Testing
-<Just write "CI">
+<Usually just write "CI".  if the task is for a frontend ticket, then consider launching the Vanta app locally and taking screenshots or a brief MP4 recording showing the new user interface changes. If it includes both frontend and backend changes, consider additionally collecting some sort of evidence showing that the backend also works as expected (for example, inspecting the backend jobs, inspecting the database, etc.). Feel free to include details, logs, or screenshots related to the backend as well >
 
 [PEX-xxx]: https://vanta.atlassian.net/browse/PEX-xxx
 
