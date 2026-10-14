@@ -78,26 +78,31 @@ Use these **exact** headings (`### Changes`, `### Motivation`, `### Testing`):
 
 ```markdown
 ## Changes
-<One to four short sentences describing what changed. If the pull request title conveys the changes well enough, then just write "TIN". Typically this should just be "TIN">
+<
+Bullet points describing what changed. Each bullet point describes a discrete change. The first sentence of the bullet point should be bolded, and then the remaining one to two sentences should be motivation for that specific change
+
+If the pull request title conveys the changes well enough, then just write "TIN".
+
+Include a Mermaid diagram showing the different components or services that are involved. The style should be that boxes contain services or components with actual names from our system. There can optionally be small subtext underneath that title, explaining which exact function or what is happening within that component. Be sure that the text is not truncated inside the boxes.
+>
 
 ## Motivation
-<Just write "[PEX-xxx]: {Title of the Jira ticket}" here where PEX-xxx is the actual Jira ticket ID. Be sure to include the square brackets. The Jira ticket ID can usually be parsed from the git branch name (pattern "conner/PEX-xxx")>
+<Write "[PEX-xxx]: {Title of the Jira ticket}" here where PEX-xxx is the actual Jira ticket ID. Be sure to include the square brackets. The Jira ticket ID can usually be parsed from the git branch name (pattern "conner/PEX-xxx")>
 
 ## Testing
-<Usually just write "CI".  if the task is for a frontend ticket, then consider launching the Vanta app locally and taking screenshots or a brief MP4 recording showing the new user interface changes. If it includes both frontend and backend changes, consider additionally collecting some sort of evidence showing that the backend also works as expected (for example, inspecting the backend jobs, inspecting the database, etc.). Feel free to include details, logs, or screenshots related to the backend as well >
+<
+Always write "CI".
+
+If the task is for a frontend ticket, then launch the Vanta app locally and take screenshots or a brief QuickTime-compatible MP4 recording showing the new user interface changes. If you're not able to attach these to the pull request, then just give them to me as a downloadable zip file.
+
+If it includes both frontend and backend changes, consider additionally collecting some sort of evidence showing that the backend also works as expected (for example, inspecting the backend jobs, inspecting the database, etc.). Feel free to include details, logs, or screenshots related to the backend as well.
+>
 
 [PEX-xxx]: https://vanta.atlassian.net/browse/PEX-xxx
 
 ## Deployment
 <Document deployment order if there are any dependencies on other PRs, especially if we're creating a PR stack. Enumerate the PRs as a numbered list with each entry formatted like: "#{PR number} - deploy to prod then wait for a full deployment cycle for rollback safety OR no dependencies". If there are no dependencies, just write "No dependencies">
 ```
-
-Guidelines:
-
-- **Changes**: Stay to either "TIN" or **one or two sentences** total; name the behavioral or structural outcome, not every file touched.
-- **Motivation**: Always write "[PEX-xxx]" where PEX-xxx is the Jira ticket ID. If you don't know the Jira ticket ID then just write "TODO"
-- **Testing**: Always write "CI"
-- Do not include the phrase "Made-with: Cursor".
 
 # GitHub pull request review workflow (`review <PR_URL>`)
 
