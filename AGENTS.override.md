@@ -93,9 +93,9 @@ Include a Mermaid diagram showing the different components or services that are 
 <
 Always write "CI".
 
-If the task is for a frontend ticket, then launch the Vanta app locally and take screenshots or a brief QuickTime-compatible MP4 recording showing the new user interface changes. If you're not able to attach these to the pull request, then just give them to me as a downloadable zip file.
+If the task includes frontend changes, then launch the Vanta app locally and take screenshots or a brief QuickTime-compatible MP4 recording showing the new user interface changes. If you're not able to attach these to the pull request, then just give them to me as a downloadable zip file. You are allowed to install a browser; you do not need to ask for permission.
 
-If it includes both frontend and backend changes, consider additionally collecting some sort of evidence showing that the backend also works as expected (for example, inspecting the backend jobs, inspecting the database, etc.). Feel free to include details, logs, or screenshots related to the backend as well.
+If it includes backend changes, collect some evidence showing that the backend also works as expected (for example, inspecting the backend jobs, inspecting the database, etc.). Provide screenshots or recordings in the zip file.
 >
 
 [PEX-xxx]: https://vanta.atlassian.net/browse/PEX-xxx
