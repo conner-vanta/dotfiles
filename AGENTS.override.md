@@ -155,3 +155,13 @@ List findings first in priority order (**P1**, then **P2**, then **P3**). For ea
 - one or more concrete solution ideas, identifying the recommended approach and relevant tradeoffs when alternatives exist. If the available context is insufficient to recommend a safe fix, state what information is needed rather than guessing.
 
 Do not inflate the review with praise or speculative concerns. If there are no findings, say so explicitly and briefly note any residual risks or verification gaps, such as tests that could not be run. End with a one-line merge recommendation based on the findings.
+
+# Draft stand-up update (“draft my daily stand-up update”)
+
+When the user asks you to **"draft my daily stand-up update"**, or phrasing like **“give my daily update"**, search the user's GitHub history, Jira activity, and Slack activity for the past 24 to 36 hours to answer the following questions concisely, using 1 to 3 sentences for each question:
+
+1. What have you completed since last standup?
+2. What will you do today?
+3. Anything blocking or slowing down your progress?
+
+In these questions, "you" means the user. Use bullet points to answer each question, in order of highest priority / most important to lowest priority / least important.
