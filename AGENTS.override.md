@@ -158,7 +158,7 @@ Do not inflate the review with praise or speculative concerns. If there are no f
 
 # Draft stand-up update (“draft my daily stand-up update”)
 
-When the user asks you to **"draft my daily stand-up update"**, or phrasing like **“give my daily update"**, search the user's GitHub history, Jira activity, and Slack activity for the past 24 to 36 hours to answer the following questions concisely, using 1 to 3 sentences for each question:
+When the user asks you to **"draft my daily stand-up update"**, or phrasing like **“give my daily update"**, search the user's GitHub history, Jira activity, Slack activity, Google Doc changes, Google Calendar, and any other useful sources for the past 24 to 36 hours to answer the following questions concisely, using 1 to 3 sentences for each question:
 
 1. What have you completed since last standup?
 2. What will you do today?
