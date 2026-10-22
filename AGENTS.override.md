@@ -164,4 +164,4 @@ When the user asks you to **"draft my daily stand-up update"**, or phrasing like
 2. What will you do today?
 3. Anything blocking or slowing down your progress?
 
-In these questions, "you" means the user. Use bullet points to answer each question, in order of highest priority / most important to lowest priority / least important.
+In these questions, "you" means the user. For each question, provide the answer as a list of bullet points in order of highest priority / most important to lowest priority / least important.
