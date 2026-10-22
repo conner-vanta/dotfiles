@@ -83,7 +83,7 @@ Bullet points describing what changed. Each bullet point describes a discrete ch
 
 If the pull request title conveys the changes well enough, then just write "TIN".
 
-Include a Mermaid diagram showing the different components or services that are involved. The style should be that boxes contain services or components with actual names from our system. There can optionally be small subtext underneath that title, explaining which exact function or what is happening within that component. Be sure that the text is not truncated inside the boxes.
+Attach an architecture diagram as a PNG showing the different components or services that are involved. The style should be that boxes contain services or components with actual names from our system. See "01-option-one-write-path.png" and "02-option-one-read-path.png" for examples of the style and detail of the diagram. If helpful, generate a diagram illustrating the architecture before the change and after the change. Highlight the parts of the architecture that are changing.
 >
 
 ## Motivation
