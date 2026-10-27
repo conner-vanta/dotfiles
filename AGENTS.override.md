@@ -165,3 +165,11 @@ When the user asks you to **"draft my daily stand-up update"**, or phrasing like
 3. Anything blocking or slowing down your progress?
 
 In these questions, "you" means the user. For each question, provide the answer as a list of bullet points in order of highest priority / most important to lowest priority / least important.
+
+# Git push authorization
+
+Normal, non-force pushes to the current feature or PR branch are
+preauthorized when needed to complete my requested work, including
+PR babysitting and CI fixes. Do not ask for separate confirmation.
+Run relevant validation and keep Git hooks enabled.
+
