@@ -170,6 +170,8 @@ In these questions, "you" means the user. For each question, provide the answer 
 
 Follow the regular babysit-pr skill / workflow. Additionally, be sure to reply to any Greptile or ai-tooling-app comments directly in the thread. Do not resolve the comments. After addressing all comments, re-trigger Greptile reviews. It's important to get a 5/5 Greptile review score.
 
+ if the pull request is part of a GitHub stack, then babysit all of the pull requests in the stack.
+
 # Git push authorization
 
 Normal, non-force pushes to the current feature or PR branch are
