@@ -26,6 +26,12 @@ JIRA_EMAIL="${JIRA_EMAIL:-$GIT_EMAIL}"
 ACLI_INSTALL_DIR="${ACLI_INSTALL_DIR:-$HOME/.local/bin}"
 ACLI_BIN="${ACLI_INSTALL_DIR}/acli"
 
+# Load Ona-managed environment variables and secrets.
+if [ -r /etc/profile.d/ona-secrets.sh ]; then
+  source /etc/profile.d/ona-secrets.sh
+fi
+
+
 os="$(uname -s | tr '[:upper:]' '[:lower:]')"
 arch="$(uname -m)"
 case "$arch" in
