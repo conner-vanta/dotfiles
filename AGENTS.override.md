@@ -101,7 +101,7 @@ If it includes backend changes, collect some evidence showing that the backend a
 [PEX-xxx]: https://vanta.atlassian.net/browse/PEX-xxx
 
 ## Deployment
-<Document deployment order if there are any dependencies on other PRs, especially if we're creating a PR stack. Enumerate the PRs as a numbered list with each entry formatted like: "#{PR number} - deploy to prod then wait for a full deployment cycle for rollback safety OR no dependencies". If there are no dependencies, just write "No dependencies">
+<Document deployment order if there are any dependencies on other PRs. If we're creating a PR stack, determine if one of the earlier PRs needs to be merged and fully deployed before the current PR. If there are such dependencies, then enumerate the PRs as a numbered list with each entry formatted like: "#{PR number} - deploy to prod first". If there are no such dependencies for the current PR, just write "No dependencies".>
 ```
 
 # GitHub pull request review workflow (`review <PR_URL>`)
