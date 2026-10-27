@@ -166,7 +166,7 @@ When the user asks you to **"draft my daily stand-up update"**, or phrasing like
 
 In these questions, "you" means the user. For each question, provide the answer as a list of bullet points in order of highest priority / most important to lowest priority / least important.
 
-# Babysit ("babysit {GitHub Pull Request Link})
+# Babysit ("babysit {optional GitHub Pull Request Link or you can infer the Pull Request from the conversation context}")
 
 Follow the regular babysit-pr skill / workflow. Additionally, be sure to reply to any Greptile or ai-tooling-app comments directly in the thread. Do not resolve the comments. After addressing all comments, re-trigger Greptile reviews. It's important to get a 5/5 Greptile review score.
 
