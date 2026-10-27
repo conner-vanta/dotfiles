@@ -84,6 +84,8 @@ Bullet points describing what changed. Each bullet point describes a discrete ch
 If the pull request title conveys the changes well enough, then just write "TIN".
 
 Attach an architecture diagram as a PNG showing the different components or services that are involved. The style should be that boxes contain services or components with actual names from our system. See "01-option-one-write-path.png" and "02-option-one-read-path.png" for examples of the style and detail of the diagram. If helpful, generate a diagram illustrating the architecture before the change and after the change. Highlight the parts of the architecture that are changing.
+
+ If you run into any authentication / authorization issues with GitHub, especially CLI authentication, then load the Ona shell exports and then try again.
 >
 
 ## Motivation
@@ -180,4 +182,7 @@ Normal, non-force pushes to the current feature or PR branch are
 preauthorized when needed to complete my requested work, including
 PR babysitting and CI fixes. Do not ask for separate confirmation.
 Run relevant validation and keep Git hooks enabled.
+
+# Authentication / Authorization Issues
+If you run into any authentication / authorization issues with GitHub, Datadog, or any other service, then load the Ona shell exports and then try again. Usually this means an environment variables isn't set. Loading the shell exports will set the environment variables.
 
