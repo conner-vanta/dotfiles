@@ -95,15 +95,13 @@ Attach an architecture diagram as a PNG showing the different components or serv
 <
 Always write "CI".
 
-If the task includes frontend changes, then launch the Vanta app locally and take screenshots or a brief QuickTime-compatible MP4 recording showing the new user interface changes. If you're not able to attach these to the pull request, then just give them to me as a downloadable zip file. You are allowed to install a browser; you do not need to ask for permission.
-
-If it includes backend changes, collect some evidence showing that the backend also works as expected (for example, inspecting the backend jobs, inspecting the database, etc.). Provide screenshots or recordings in the zip file.
+If the task includes frontend changes, then launch the Vanta app locally and take screenshots or a brief QuickTime-compatible MP4 recording showing the new user interface changes. If you're not able to attach these to the pull request due to an authentication or authorization issue, try loading Ona shell exports then try again. If it still fails, then just give them to me as a downloadable zip file. You are allowed to install a browser; you do not need to ask for permission.
 >
 
 [PEX-xxx]: https://vanta.atlassian.net/browse/PEX-xxx
 
 ## Deployment
-<Document deployment order if there are any dependencies on other PRs. If we're creating a PR stack, determine if one of the earlier PRs needs to be merged and fully deployed before the current PR. If there are such dependencies, then enumerate the PRs as a numbered list with each entry formatted like: "#{PR number} - deploy to prod first". If there are no such dependencies for the current PR, just write "No dependencies".>
+<Document deployment order if there are any dependencies on other PRs. If we're creating a PR stack, determine if one of the earlier PRs needs to be merged and fully deployed before the current PR. If there are such dependencies, then enumerate the PRs that precede this current PR in the stack as a numbered list. For a PR that needs to be deployed before the current PR, then format the list entry like: "#{PR number} - deploy to prod first". For a PR that does not need to be deployed before the current PR, then format the list entry like "#{PR number} - no dependency on this PR". If there are no such dependencies for the current PR, just write "No dependencies".>
 ```
 
 # GitHub pull request review workflow (`review <PR_URL>`)
