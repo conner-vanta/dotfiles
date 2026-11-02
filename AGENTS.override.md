@@ -136,6 +136,10 @@ ticket, treat that issue key as `TICKET`.
    migration skill's longer PR evidence presentation, not its verification
    requirements.
 
+7. When creating the draft PR, move its Jira ticket to **In Progress** and
+   verify the resulting status. If the ticket is already further along in
+   the workflow, do not move it backward.
+
 ## Concise PR description preference
 
 Keep every required repository template heading, but keep the prose short.
