@@ -150,7 +150,9 @@ For Vitest migration PRs:
   configuration adaptations. Do not call it configuration-only if tests or
   implementation code changed.
 - **Motivation:** link the ticket, explain the benefit, and report the measured
-  before/after duration. Retain the compact timing table with every reported
+  before/after duration. Keep the overall duration improvement percentage and
+  before/after values bold in the opening paragraph, above the timing table;
+  do not move or repeat the percentage below the table. Retain the compact timing table with every reported
   phase and a short measurement command/context paragraph.
 - **Testing:** after a successful strict check, write
   `Strict verification passed, using the @vanta/testing test isolation verifier.`
