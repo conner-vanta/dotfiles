@@ -128,6 +128,10 @@ ticket, treat that issue key as `TICKET`.
    verification, and PR requirements. Use its PR guidance and the current
    repository template instead of the PEX-only PR template above.
 
+5. Prefix every SNOW ticket PR title with the actual ticket key in square
+   brackets, for example: `[SNOW-6] Migrate cloud-data-capture-service tests
+   to the default Vitest configuration`.
+
 If the required skill or verification tool is unavailable after updating
 the checkout, report the missing prerequisite rather than inventing a
 replacement workflow.
