@@ -1,0 +1,19 @@
+AGENTS.override.md
+  s_42676392d23803::t_46563f33781eb2 175-183,250-251
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.9",
+  "base_commit_sha": "4e788c538d1547c2d1fa011681b286502c510ca1",
+  "prompts": {},
+  "sessions": {
+    "s_42676392d23803": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "s_42676392d23803",
+        "model": "unknown"
+      },
+      "human_author": "Conner S <conner.smith@vanta.com>"
+    }
+  }
+}
