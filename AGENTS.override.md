@@ -104,6 +104,34 @@ If the task includes frontend changes, then launch the Vanta app locally and tak
 <Document deployment order if there are any dependencies on other PRs. If we're creating a PR stack, determine if one of the earlier PRs needs to be merged and fully deployed before the current PR. If there are such dependencies, then enumerate the PRs that precede this current PR in the stack as a numbered list. For a PR that needs to be deployed before the current PR, then format the list entry like: "#{PR number} - deploy to prod first". For a PR that does not need to be deployed before the current PR, then format the list entry like "#{PR number} - no dependency on this PR". If there are no such dependencies for the current PR, just write "No dependencies".>
 ```
 
+# SNOW ticket workflow (“do SNOW-xxx”)
+
+When the user asks to **do**, **work on**, or **start** a `SNOW-xxx`
+ticket, treat that issue key as `TICKET`.
+
+1. Follow steps 1–3 of the Jira ticket workflow above: update the default
+   branch, create or check out `conner/TICKET`, and load the ticket's
+   summary and description. For example, SNOW-6 uses `conner/SNOW-6`.
+
+2. Determine scope from the fetched ticket. For backend Vitest migration
+   tickets, read and follow:
+   `.agents/skills/migrate-vitest-to-default/SKILL.md`.
+   Follow its referenced guidance, including use of the test isolation
+   verification tool. Do not assume every SNOW ticket is a migration.
+
+3. Present a concrete plan grounded in the ticket and skill before
+   substantial edits, then carry out the skill's workflow through
+   verification and draft PR creation unless the user specifies a
+   different stopping point.
+
+4. For these migrations, the skill governs implementation, testing,
+   verification, and PR requirements. Use its PR guidance and the current
+   repository template instead of the PEX-only PR template above.
+
+If the required skill or verification tool is unavailable after updating
+the checkout, report the missing prerequisite rather than inventing a
+replacement workflow.
+
 # GitHub pull request review workflow (`review <PR_URL>`)
 
 When the user asks to **review** a GitHub pull request with phrasing such as **`review https://github.com/OWNER/REPO/pull/123`**, treat the URL as **`PR_URL`** and perform a read-only code review. Do not change code, push commits, submit a GitHub review, or post comments unless the user explicitly asks.
