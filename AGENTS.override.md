@@ -174,6 +174,15 @@ If the required skill or verification tool is unavailable after updating
 the checkout, report the missing prerequisite rather than inventing a
 replacement workflow.
 
+# Devin review requirement for all my PRs
+
+I expect every PR I author to receive a passing Devin review with **no issues found** before it is considered ready to merge. This applies to every PR in a stack as well.
+
+- When creating, updating, or babysitting my PRs, ensure Devin reviews the latest head commit. If automatic review has not run, trigger it with `/devin review` on the PR.
+- Address Devin's findings, run the relevant validation, push the fixes, and request another review until Devin explicitly reports **“Devin Review: No Issues Found”** (or an equivalent clean result) for the latest head commit.
+- A green check that only confirms review completion, resolved comment threads, or a clean review of an older commit does not satisfy this requirement.
+- If Devin is unavailable, cannot access the repository, or still reports issues, report that as a blocker. Do not claim the PR is ready or that this requirement has passed.
+
 # GitHub pull request review workflow (`review <PR_URL>`)
 
 When the user asks to **review** a GitHub pull request with phrasing such as **`review https://github.com/OWNER/REPO/pull/123`**, treat the URL as **`PR_URL`** and perform a read-only code review. Do not change code, push commits, submit a GitHub review, or post comments unless the user explicitly asks.
@@ -239,6 +248,8 @@ In these questions, "you" means the user. For each question, provide the answer 
 # Babysit ("babysit {optional GitHub Pull Request Link or you can infer the Pull Request from the conversation context}")
 
 Follow the regular babysit-pr skill / workflow. Additionally, be sure to reply to any Greptile, ai-tooling-app, or semgrep-code-vantainc comments directly in the thread. Do not resolve the comments. In your reply, do not include the text "after conner-vanta preauthorized this reply type without reviewing the draft." After addressing all comments, re-trigger Greptile reviews. It's important to get a 5/5 Greptile review score. After a new Greptile review successfully runs, delete the comment that you used to re-trigger the Greptile review.
+
+Also enforce the **Devin review requirement for all my PRs** above: babysitting is not complete until Devin reports no issues found on the latest head commit of every PR being watched.
 
 Also, if there are multiple comments from ai-tooling-app that provide the "PeX audit-risk review", hide all of them as "outdated" except for the most recent one. Keep only the most recent one on the pull request.
 
