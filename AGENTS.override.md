@@ -251,7 +251,7 @@ In these questions, "you" means the user. For each question, provide the answer 
 
 # Babysit ("babysit {optional GitHub Pull Request Link or you can infer the Pull Request from the conversation context}")
 
-Follow the regular babysit-pr skill / workflow. Additionally, be sure to reply to any Greptile, ai-tooling-app, or semgrep-code-vantainc comments directly in the thread. Do not resolve the comments. In your reply, do not include the text "after conner-vanta preauthorized this reply type without reviewing the draft." After addressing all comments, re-trigger Greptile reviews. It's important to get a 5/5 Greptile review score. After a new Greptile review successfully runs, delete the comment that you used to re-trigger the Greptile review.
+Follow the regular babysit-pr skill / workflow. Additionally, be sure to reply to any Devin, Greptile, ai-tooling-app, or semgrep-code-vantainc comments directly in the thread. Do not resolve the comments. In your reply, do not include the text "after conner-vanta preauthorized this reply type without reviewing the draft." After addressing all comments, re-trigger Greptile and Devin reviews. It's important to get a 5/5 Greptile review score and Devin finds no issues. After a new Devin or Greptile review successfully runs, delete the comment that you used to re-trigger the Devin or Greptile review. Also, I noticed that Devin posts comments like "Devin Review found X issues" for each review. Delete stale ones; only keep the latest one. There should not be multiple on the PR.
 
 Also enforce the **Devin review requirement for all my PRs** above: babysitting is not complete until Devin reports no issues found on the latest head commit of every PR being watched.
 
