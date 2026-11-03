@@ -95,7 +95,7 @@ cp "$SOURCE_AGENTS_OVERRIDE" "$AGENTS_OVERRIDE_FILE"
 echo "Installed AGENTS override to ${AGENTS_OVERRIDE_FILE}"
 
 # --- Install proj-snowplow-knowledge-base (Project Snowplow KB + snowplow-* skills) ---
-# Per the KB's README: clone into $HOME/sahred (shared EFS on Ona, so every instance sees
+# Per the KB's README: clone into $HOME/shared (shared EFS on Ona, so every instance sees
 # it), then run its setup.sh, which pulls when on clean main and links the
 # snowplow-* skills into ~/.claude/skills and ~/.agents/skills.
 SNOW_KB="$HOME/shared/proj-snowplow-knowledge-base"
