@@ -28,6 +28,7 @@ ACLI_BIN="${ACLI_INSTALL_DIR}/acli"
 
 # Load Ona-managed environment variables and secrets.
 if [ -r /etc/profile.d/ona-secrets.sh ]; then
+  # shellcheck source=/dev/null
   source /etc/profile.d/ona-secrets.sh
 fi
 
@@ -79,20 +80,7 @@ printf '%s\n' "$JIRA_API_TOKEN" | "$ACLI_BIN" jira auth login \
   --token
 
 # Buildkite auth
-bk configure --org VantaInc --token $BUILDKITE_API_TOKEN --force
-
-AGENTS_OVERRIDE_FILE="/workspaces/obsidian/AGENTS.override.md"
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-SOURCE_AGENTS_OVERRIDE="${SCRIPT_DIR}/AGENTS.override.md"
-
-echo "Creating AGENTS.override.md file"
-if [[ ! -f "$SOURCE_AGENTS_OVERRIDE" ]]; then
-  echo "Missing ${SOURCE_AGENTS_OVERRIDE}; cannot install AGENTS override." >&2
-  exit 1
-fi
-mkdir -p "$(dirname "$AGENTS_OVERRIDE_FILE")"
-cp "$SOURCE_AGENTS_OVERRIDE" "$AGENTS_OVERRIDE_FILE"
-echo "Installed AGENTS override to ${AGENTS_OVERRIDE_FILE}"
+bk configure --org VantaInc --token "$BUILDKITE_API_TOKEN" --force
 
 # --- Install proj-snowplow-knowledge-base (Project Snowplow KB + snowplow-* skills) ---
 # Per the KB's README: clone into $HOME/shared (shared EFS on Ona, so every instance sees
@@ -103,5 +91,29 @@ SNOW_KB="$HOME/shared/proj-snowplow-knowledge-base"
   || git clone --quiet https://github.com/VantaInc/proj-snowplow-knowledge-base.git "$SNOW_KB"
 SNOWPLOW_KB_DIR="$SNOW_KB" bash "$SNOW_KB/scripts/setup.sh" \
   || echo "snowplow KB: setup.sh failed"
+
+AGENTS_OVERRIDE_FILE="/workspaces/obsidian/AGENTS.override.md"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SOURCE_AGENTS_OVERRIDE="${SCRIPT_DIR}/AGENTS.override.md"
+
+SOURCE_SKILLS="${SCRIPT_DIR}/.agents/skills"
+TARGET_SKILLS="/workspaces/obsidian/.agents/skills"
+
+echo "Installing agent configuration"
+if [[ ! -f "$SOURCE_AGENTS_OVERRIDE" ]]; then
+  echo "Missing ${SOURCE_AGENTS_OVERRIDE}; cannot install AGENTS override." >&2
+  exit 1
+fi
+if [[ ! -d "$SOURCE_SKILLS" ]]; then
+  echo "Missing ${SOURCE_SKILLS}; cannot install agent skills." >&2
+  exit 1
+fi
+mkdir -p "$(dirname "$AGENTS_OVERRIDE_FILE")" "$TARGET_SKILLS"
+cp "$SOURCE_AGENTS_OVERRIDE" "$AGENTS_OVERRIDE_FILE"
+echo "Installed AGENTS override to ${AGENTS_OVERRIDE_FILE}"
+
+# Personal skills use conner-* names to coexist with Obsidian's shared skills.
+cp -R "$SOURCE_SKILLS/." "$TARGET_SKILLS/"
+echo "Installed agent skills to ${TARGET_SKILLS}"
 
 echo "Done running dotfiles installation script."
