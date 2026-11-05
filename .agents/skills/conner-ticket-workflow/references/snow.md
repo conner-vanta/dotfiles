@@ -1,3 +1,30 @@
+# SNOW tickets
+
+Apply these rules to SNOW tickets alongside the shared Jira workflow.
+
+## Implementation
+
+SNOW work does not require plan mode or a plan-approval pause. Give a concise
+implementation outline in the current mode, then proceed through implementation
+and verification unless the user explicitly requests planning only or another
+stopping point. Determine scope from the ticket; not every SNOW ticket is a
+Vitest migration. For migrations, follow the repository’s
+`migrate-vitest-to-default` skill and its strict isolation verification requirements.
+
+## Draft pull request
+
+Use the repository’s `commit-and-pr` skill and current PR template directly.
+Do not load `conner-pr-workflow` or apply PEX’s template or architecture-diagram
+requirement. SNOW PRs do not require diagrams.
+
+- Prefix the title with the actual ticket key, for example
+  `[SNOW-6] Migrate cloud-data-capture-service tests to the default Vitest configuration`.
+- Add the `proj-snowplow` GitHub label to every SNOW PR, including drafts and
+  non-migration work, alongside the required security-risk label. Verify both
+  labels after creation.
+- When creating the draft PR, move its Jira ticket to **In Progress** and verify
+  the resulting status. If already further along, do not move it backward.
+
 ## Concise PR description preference
 
 Keep every required repository template heading, but keep the prose short.

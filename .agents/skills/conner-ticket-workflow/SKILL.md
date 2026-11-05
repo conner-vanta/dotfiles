@@ -10,6 +10,13 @@ Follow the steps in order unless the user changes scope or specifies a stopping
 point. Git and authenticated `acli` are prerequisites: if either fails, report
 the error and stop; never invent ticket content.
 
+Before starting, read only the reference matching the ticket’s project:
+
+- **SNOW:** [SNOW workflow](references/snow.md), including proceeding without
+  plan mode and using SNOW’s PR requirements directly.
+- **PEX:** [PEX workflow](references/pex.md), including the PEX PR workflow.
+- **Other projects:** follow repository conventions without PEX/SNOW overrides.
+
 1. **Update the default branch.** Check out `main`, or `master` if it is the
    default and `main` does not exist. Pull using repository practice (fast-forward
    only if that is the norm), preserving unrelated working-tree changes.
@@ -48,13 +55,11 @@ the error and stop; never invent ticket content.
    - [ ] **oxfmt:** format every changed file and list the formatted files.
 
    Present the plan before substantial edits unless the user already asked for
-   immediate implementation after planning. **SNOW tickets do not require plan
-   mode or a plan-approval pause:** give a concise implementation outline in the
-   current mode and proceed through implementation and verification. Honor an
-   explicit request from the user to plan only or stop before implementation.
+   immediate implementation after planning. Apply the selected project reference’s
+   planning rules, including SNOW’s exemption from plan mode. Honor an explicit
+   request from the user to plan only or stop before implementation.
 
 6. **Implement, verify, and open a draft PR.** Follow the plan, complete each check,
-   and summarize commands and outcomes. Load the sibling `conner-pr-workflow` skill
-   for PR formatting and project-specific rules: SNOW uses `[SNOW-XXX]` and
-   `proj-snowplow`; PEX uses `[BE]`, `[FE]`, or `[BE + FE]`. Other Jira projects
-   follow the repository’s PR conventions without inheriting PEX/SNOW rules.
+   and summarize commands and outcomes. Use the selected project reference for
+   PR formatting, labels, and Jira status. For other projects, use the repository’s
+   `commit-and-pr` skill and PR conventions directly.
