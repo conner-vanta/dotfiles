@@ -1,263 +1,24 @@
-# Jira ticket workflow (“do PEX-xxx”)
-
-When the user asks you to **do** a Jira ticket, or phrasing like **“do PEX-123”**, **“work on PEX-123”**, or **“start PEX-123”** (where `PEX-123` is a Jira issue key), treat that issue key as **`TICKET`** and follow this workflow **in order**. Do not skip steps unless the user explicitly changes scope.
-
-## Preconditions
-
-- Assume a **git** repository and **Atlassian CLI (`acli`)** installed and already authenticated for Jira (`acli jira …` works).
-- If `acli` or `git` fails, report the error and stop; do not invent ticket text.
-
-## Steps
-
-### 1. Update `main`
-
-- Check out **`main`** (or **`master`** if that is the default branch and `main` does not exist).
-- Run **`git pull`** (with fast-forward only if that is the repo norm; otherwise pull as the project usually does) so **`TICKET`** work starts from current upstream.
-
-### 2. Create branch `conner/TICKET`
-
-- From the updated default branch, create and check out a new branch named exactly:
-
-  **`conner/TICKET`**
-
-  Example: for `PEX-742`, the branch is **`conner/PEX-742`**.
-
-- If that branch already exists locally, check it out and **rebase or merge** from the updated default branch per repo practice, or ask the user if there is ambiguity.
-
-### 3. Load ticket summary and description
-
-- Run (substitute the real issue key for `TICKET`):
-
-  ```bash
-  acli jira workitem view TICKET --fields summary,description
-  ```
-
-- Use the **command output as the source of truth** for summary and description. If the command errors or returns empty fields, say so and do not fabricate scope.
-
-### 4. Plan from the ticket
-
-- Build a **concrete implementation plan** grounded only in:
-  - the fetched **summary** and **description**, and
-  - what you can infer from the **current codebase** after brief, targeted exploration if needed.
-- If you are **not sure which files or areas are relevant** (e.g. the ticket is vague, the repo is large, or multiple subsystems could apply), **stop and ask the user**—prompt them to list or point to **relevant files or directories** (paths in the repo, links, or paste) before you draft a detailed plan. Do not guess a file list and proceed as if it were certain.
-- The plan should include: goal, ordered tasks, files or areas likely to touch, risks or unknowns, and how to verify (tests, manual checks). Keep it proportional to ticket size.
-- The plan **must explicitly include** all of the following (with concrete commands or entry points taken from the repo when you know them, e.g. `package.json`, `Makefile`, CI config):
-  - **Unit tests**: add or update unit tests for the behavior in the ticket; say which suites or files you expect to touch.
-  - **Green tests**: run the relevant unit test command(s), **iterate until they pass**, and note what you ran.
-  - **Linter**: run the project linter on the work, fix reported issues, and note what you ran.
-  - **`oxfmt`**: run **`oxfmt`** on **all changed files** (format in place or per project convention), and list which files were formatted.
-- Consider breaking the task into multiple discrete pull requests that can be stacked on top of each other and are independently reviewable. Consider things like: if multiple teams are required to review a pull request, can we split this pull request into multiple so that each pull request only requires review from one team.  if a pull request is over 1,000 lines of code or span multiple systems owned by different teams, we should strongly prefer to split it into multiple pull requests. Think about any backward compatibility and deployment order requirements these pull requests, and fill in those details in the deployment section (see GitHub pull request template below) 
-
-### 5. Present the plan
-
-- **Present the plan to the user** in clear sections before writing large amounts of code, unless they have already asked you to implement immediately after planning.
-- Include the **branch name** (`conner/TICKET`) and a **one-line reminder** of the ticket summary so context is obvious.
-- The presented plan must call out **unit tests**, **passing tests**, **linter**, and **`oxfmt` on changed files** as distinct checklist items so completion criteria are unambiguous.
-
-### 6. When you implement after the plan
-
-- Follow the plan, including: **write/update unit tests**, **run tests until they pass**, **run the linter and fix issues**, and **run `oxfmt` on every file you changed** before considering the work done. Summarize commands run and outcomes in your final message.
-- Raise a **GitHub pull request** for these changes by following the GitHub pull request instructions below.
-
-## Naming
-
-- **`TICKET`**: the Jira issue key from the user message (e.g. `PEX-123`).
-- **Branch**: always **`conner/<TICKET>`** unless the user specifies a different naming rule in that thread.
-
-## GitHub pull requests
-
-When opening or drafting a **GitHub pull request** for work tied to **`PEX-xxx`**, use **only** the following body structure. Do not add extra sections, checklists, or boilerplate unless the user asks for them in that thread.
-
-Set the pull request **title** to a concise **one-sentence** description of the changes (summarize the outcome, not every file touched).  If the changes touch the backend (e.g. web server, GraphQL resolvers, Mongo models, background jobs), then prefix the title with [BE]. If it touches the frontend, use [FE]. If it touches both, then prefix with [BE + FE].
-
-### Labels
-
-Attach the GitHub label **`security-risk-low`** to the pull request.
-
-Use these **exact** headings (`### Changes`, `### Motivation`, `### Testing`):
-
-```markdown
-## Changes
-<
-Bullet points describing what changed. Each bullet point describes a discrete change. The first sentence of the bullet point should be bolded, and then the remaining one to two sentences should be motivation for that specific change
-
-If the pull request title conveys the changes well enough, then just write "TIN".
-
-Attach an architecture diagram as a PNG showing the different components or services that are involved. The style should be that boxes contain services or components with actual names from our system. See "01-option-one-write-path.png" and "02-option-one-read-path.png" for examples of the style and detail of the diagram. If helpful, generate a diagram illustrating the architecture before the change and after the change. Highlight the parts of the architecture that are changing.
-
- If you run into any authentication / authorization issues with GitHub, especially CLI authentication, then load the Ona shell exports and then try again.
->
-
-## Motivation
-<Write "[PEX-xxx]: {Title of the Jira ticket}" here where PEX-xxx is the actual Jira ticket ID. Be sure to include the square brackets. The Jira ticket ID can usually be parsed from the git branch name (pattern "conner/PEX-xxx")>
-
-## Testing
-<
-Always write "CI".
-
-If the task includes frontend changes, then launch the Vanta app locally and take screenshots or a brief QuickTime-compatible MP4 recording showing the new user interface changes. If you're not able to attach these to the pull request due to an authentication or authorization issue, try loading Ona shell exports then try again. If it still fails, then just give them to me as a downloadable zip file. You are allowed to install a browser; you do not need to ask for permission.
->
-
-[PEX-xxx]: https://vanta.atlassian.net/browse/PEX-xxx
-
-## Deployment
-<Document deployment order if there are any dependencies on other PRs. If we're creating a PR stack, determine if one of the earlier PRs needs to be merged and fully deployed before the current PR. If there are such dependencies, then enumerate the PRs that precede this current PR in the stack as a numbered list. For a PR that needs to be deployed before the current PR, then format the list entry like: "#{PR number} - deploy to prod first". For a PR that does not need to be deployed before the current PR, then format the list entry like "#{PR number} - no dependency on this PR". If there are no such dependencies for the current PR, just write "No dependencies".>
-```
-
-# SNOW ticket workflow (“do SNOW-xxx”)
-
-When the user asks to **do**, **work on**, or **start** a `SNOW-xxx`
-ticket, treat that issue key as `TICKET`.
-
-1. Follow steps 1–3 of the Jira ticket workflow above: update the default
-   branch, create or check out `conner/TICKET`, and load the ticket's
-   summary and description. For example, SNOW-6 uses `conner/SNOW-6`.
-
-2. Determine scope from the fetched ticket. For backend Vitest migration
-   tickets, read and follow:
-   `.agents/skills/migrate-vitest-to-default/SKILL.md`.
-   Follow its referenced guidance, including use of the test isolation
-   verification tool. Do not assume every SNOW ticket is a migration.
-
-3. Present a concrete plan grounded in the ticket and skill before
-   substantial edits, then carry out the skill's workflow through
-   verification and draft PR creation unless the user specifies a
-   different stopping point.
-
-4. For these migrations, the skill governs implementation, testing,
-   verification, and PR requirements. Use its PR guidance and the current
-   repository template instead of the PEX-only PR template above.
-
-5. Prefix every SNOW ticket PR title with the actual ticket key in square
-   brackets, for example: `[SNOW-6] Migrate cloud-data-capture-service tests
-   to the default Vitest configuration`.
-
-6. Use the concise description style below. This preference overrides the
-   migration skill's longer PR evidence presentation, not its verification
-   requirements.
-
-7. When creating the draft PR, move its Jira ticket to **In Progress** and
-   verify the resulting status. If the ticket is already further along in
-   the workflow, do not move it backward.
-
-## Concise PR description preference
-
-Keep every required repository template heading, but keep the prose short.
-Prefer one or two sentences per section and omit repeated facts, boilerplate,
-and detailed verification receipts. Use
-[SNOW-13 PR #216963](https://github.com/VantaInc/obsidian/pull/216963) as a style
-example, not as a source of results to copy.
-
-For Vitest migration PRs:
-
-- **Changes:** briefly describe the runner change and any necessary test or
-  configuration adaptations. Do not call it configuration-only if tests or
-  implementation code changed.
-- **Motivation:** link the ticket, explain the benefit, and report the measured
-  before/after duration. Keep the overall duration improvement percentage and
-  before/after values bold in the opening paragraph, above the timing table;
-  do not move or repeat the percentage below the table. Retain the compact timing table with every reported
-  phase and a short measurement command/context paragraph.
-- **Testing:** after a successful strict check, write
-  `Strict verification passed, using the @vanta/testing test isolation verifier.`
-  Then include a fenced shell block containing the exact
-  `just verify-test-isolation` CLI command that ran, including the workspace,
-  project selection, and other options actually used. Fill in the real tool
-  name and command; never leave `{tool name}` or `{tool cmd}` placeholders.
-- **Deployment:** one short statement of actual dependencies or rollout needs.
-- **AI Model used and major prompts used:** identify the actual model and tool
-  concisely, for example `GPT-6 via Codex` when accurate.
-
-Keep test inventories, diagnostics, reports, logs, and reproduction receipts in
-the retained verification artifacts rather than expanding the PR description.
-Still perform every required check. Disclose material failures, skipped required
-checks, or unresolved limitations; concise presentation must not imply a pass
-that was not obtained.
-
-If the required skill or verification tool is unavailable after updating
-the checkout, report the missing prerequisite rather than inventing a
-replacement workflow.
-
-# Devin review requirement for all my PRs
-
-I expect every PR I author to receive a passing Devin review with **no issues found** before it is considered ready to merge. This applies to every PR in a stack as well.
-
-- When creating, updating, or babysitting my PRs, ensure Devin reviews the latest head commit. If automatic review has not run, trigger it with `/devin review` on the PR. Tell Devin that it should post a comment reporting what issues were found or that no issues were found.
-- Address Devin's findings, run the relevant validation, push the fixes, and request another review until Devin explicitly reports **“Devin Review: No Issues Found”** (or an equivalent clean result) for the latest head commit.
-- A green check that only confirms review completion, resolved comment threads, or a clean review of an older commit does not satisfy this requirement.
-- If Devin is unavailable, cannot access the repository, or still reports issues, report that as a blocker. Do not claim the PR is ready or that this requirement has passed.
-
-# GitHub pull request review workflow (`review <PR_URL>`)
-
-When the user asks to **review** a GitHub pull request with phrasing such as **`review https://github.com/OWNER/REPO/pull/123`**, treat the URL as **`PR_URL`** and perform a read-only code review. Do not change code, push commits, submit a GitHub review, or post comments unless the user explicitly asks.
-
-## Preconditions
-
-- Parse the owner, repository, and pull request number from **`PR_URL`**.
-- Use GitHub pull request metadata and the diff as the source of truth. Inspect relevant surrounding code, tests, and repository instructions when needed to understand the change.
-- If the pull request or repository cannot be accessed, report the error and stop. Do not invent diff contents or findings.
-
-## Review process
-
-1. Read the pull request description, commits, changed files, and complete diff against its base branch.
-2. Identify the intended behavior and trace affected callers, data flows, tests, and interfaces far enough to evaluate the change in context.
-3. Review the change for:
-   - **Correctness**: logic errors, edge cases, regressions, error handling, concurrency, compatibility, and inadequate tests.
-   - **Readability**: clarity, naming, unnecessary complexity, misleading comments, and maintainability.
-   - **Code organization**: ownership boundaries, abstractions, duplication, cohesion, and consistency with repository conventions.
-   - **Performance**: avoidable work, inefficient queries or loops, excessive allocations or network calls, and scalability risks.
-   - **Security**: authorization, tenant isolation, validation, injection, sensitive-data exposure, unsafe defaults, and dependency risk.
-4. When useful, spawn sub-agents to review individual categories in parallel. Give each sub-agent the same pull request and a distinct category, then independently verify and deduplicate their findings before presenting them.
-5. Prefer concrete defects and actionable risks over stylistic preferences. Do not report a finding unless the changed code causes it or the pull request materially exposes or worsens it. For each confirmed finding, develop practical solution ideas rather than only describing the problem.
-
-## Finding classification
-
-Assign every finding both a priority and a merge recommendation:
-
-- **P1**: high-impact correctness, security, data-loss, availability, or broadly breaking issue. Usually **blocking**.
-- **P2**: material defect or maintainability/performance problem with meaningful impact but limited scope. Mark **blocking** when it should be fixed before merge; otherwise mark **non-blocking** and explain why follow-up is safe.
-- **P3**: low-impact improvement, localized cleanup, or minor test/readability gap. Usually **non-blocking**.
-
-Also classify the origin of every finding:
-
-- **Introduced by this PR**: absent from the base branch and caused by the proposed change.
-- **Pre-existing**: already present on the base branch. Pre-existing issues are normally non-blocking for this pull request unless the change makes them materially worse or unsafe to leave in the affected path.
-
-Verify origin against the base branch rather than guessing from the diff. Keep priority and blocking status separate: priority describes impact; blocking status describes whether this pull request should merge before the issue is addressed.
-
-## Review output
-
-List findings first in priority order (**P1**, then **P2**, then **P3**). For each finding, include:
-
-- a concise title;
-- **Priority:** `P1`, `P2`, or `P3`;
-- **Merge:** `Blocking` or `Non-blocking`;
-- **Origin:** `Introduced by this PR` or `Pre-existing`;
-- the affected file and line or smallest useful line range;
-- a clear explanation of the failure mode or risk, including the conditions that trigger it; and
-- one or more concrete solution ideas, identifying the recommended approach and relevant tradeoffs when alternatives exist. If the available context is insufficient to recommend a safe fix, state what information is needed rather than guessing.
-
-Do not inflate the review with praise or speculative concerns. If there are no findings, say so explicitly and briefly note any residual risks or verification gaps, such as tests that could not be run. End with a one-line merge recommendation based on the findings.
-
-# Draft stand-up update (“draft my daily stand-up update”)
-
-When the user asks you to **"draft my daily stand-up update"**, or phrasing like **“give my daily update"**, search the user's GitHub history, Jira activity, Slack activity, Google Doc changes, Google Calendar, and any other useful sources for the past 24 to 36 hours to answer the following questions concisely, using 1 to 3 sentences for each question:
-
-1. What have you completed since last standup?
-2. What will you do today?
-3. Anything blocking or slowing down your progress?
-
-In these questions, "you" means the user. For each question, provide the answer as a list of bullet points in order of highest priority / most important to lowest priority / least important.
-
-# Babysit ("babysit {optional GitHub Pull Request Link or you can infer the Pull Request from the conversation context}")
-
-Follow the regular babysit-pr skill / workflow. Additionally, be sure to reply to any Devin, Greptile, ai-tooling-app, or semgrep-code-vantainc comments directly in the thread. Do not resolve the comments. In your reply, do not include the text "after conner-vanta preauthorized this reply type without reviewing the draft." After addressing all comments, re-trigger Greptile and Devin reviews. It's important to get a 5/5 Greptile review score and Devin finds no issues. After a new Devin or Greptile review successfully runs, delete the comment that you used to re-trigger the Devin or Greptile review. Also, I noticed that Devin posts comments like "Devin Review found X issues" and "Starting Devin Review." for each review. Delete stale ones; only keep the latest one for each comment type. There should not be multiple for each of those comment types on the PR.
-
-Also enforce the **Devin review requirement for all my PRs** above: babysitting is not complete until Devin reports no issues found on the latest head commit of every PR being watched.
-
-Also, if there are multiple comments from ai-tooling-app that provide the "PeX audit-risk review", hide all of them as "outdated" except for the most recent one. Keep only the most recent one on the pull request.
-
- if the pull request is part of a GitHub stack, then babysit all of the pull requests in the stack.
+# Conner’s Obsidian preferences
+
+Follow the repository’s `AGENTS.md` as well as these personal preferences.
+Load only the skills relevant to the current request from `.agents/skills/`:
+
+| Request                                     | Skill                                        |
+| ------------------------------------------- | -------------------------------------------- |
+| Do, work on, or start a PEX/SNOW ticket     | `conner-ticket-workflow`                     |
+| Create/update my PR or assess its readiness | `conner-pr-workflow`                         |
+| Review a GitHub PR                          | `conner-review-pr`                           |
+| Draft my daily stand-up update              | `conner-standup`                             |
+| Babysit my PR (including its stack)         | `conner-babysit-pr` and `conner-pr-workflow` |
+
+These skills add personal preferences to the repository’s shared workflows;
+they do not replace its implementation, testing, or security guidance.
+
+## PR readiness
+
+Every PR I author, including each stack layer, needs a clean Devin review of
+its latest head before it is ready to merge. Follow `conner-pr-workflow` for
+the review loop; report unavailable review as a blocker.
 
 # Git push authorization
 
@@ -267,5 +28,5 @@ PR babysitting and CI fixes. Do not ask for separate confirmation.
 Run relevant validation and keep Git hooks enabled.
 
 # Authentication / Authorization Issues
-If you run into any authentication / authorization issues with GitHub, Datadog, or any other service, then load the Ona shell exports and then try again. Usually this means an environment variables isn't set. Loading the shell exports will set the environment variables.
 
+If you run into any authentication / authorization issues with GitHub, Datadog, or any other service, then load the Ona shell exports and then try again. Usually this means an environment variables isn't set. Loading the shell exports will set the environment variables.
