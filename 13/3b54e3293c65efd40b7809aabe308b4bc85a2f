@@ -1,0 +1,19 @@
+.agents/skills/conner-babysit-pr/SKILL.md
+  s_2c1efca0edeb37::t_a64ada70211313 16-27,37-38
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.9",
+  "base_commit_sha": "133b54e3293c65efd40b7809aabe308b4bc85a2f",
+  "prompts": {},
+  "sessions": {
+    "s_2c1efca0edeb37": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "s_2c1efca0edeb37",
+        "model": "unknown"
+      },
+      "human_author": "Conner S <conner.smith@vanta.com>"
+    }
+  }
+}
