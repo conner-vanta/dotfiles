@@ -1,12 +1,17 @@
 # Personal agent workflows
 
 `AGENTS.override.md` contains general push and authentication preferences.
-Five `conner-*` skills in `.agents/skills/` cover ticket work, PEX PR preparation, read-only
-code review, stand-up drafts, and PR babysitting. The ticket workflow applies to
+Six `conner-*` skills in `.agents/skills/` cover ticket work, PEX PR preparation, read-only
+code review, stand-up drafts, PR babysitting, and Snowplow batch pickup. The ticket workflow applies to
 all Jira projects; SNOW work proceeds without requiring plan mode.
 The ticket skill loads separate `snow.md` and `pex.md` references. SNOW uses the
 repository PR template directly, without diagrams or the personal PEX PR skill.
 The PEX PR skill bundles its architecture diagram examples.
+
+Say “pick up a new batch of snowplow tickets” or “do more snowplow tickets” to
+use `conner-snowplow-batch`. It defaults to three tickets, or accepts an explicit
+count, ranks unassigned SNOW-1 children by the blocker counts in their titles,
+assigns them to you, and delegates each to a subagent in a separate worktree.
 
 The layout follows the [Agent Skills specification](https://agentskills.io/specification)
 and [creation guidance](https://agentskills.io/skill-creation/best-practices).
