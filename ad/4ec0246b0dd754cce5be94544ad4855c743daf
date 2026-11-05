@@ -1,0 +1,23 @@
+.agents/skills/conner-pr-workflow/SKILL.md
+  s_7a3a88335d58b0::t_75e25c9a1f0ff8 12-14,17-20,25-27
+.agents/skills/conner-ticket-workflow/SKILL.md
+  s_7a3a88335d58b0::t_1b838cd03830b6 3,8-60
+README.md
+  s_7a3a88335d58b0::t_beacbbfa45353c 5-8
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.9",
+  "base_commit_sha": "ad4ec0246b0dd754cce5be94544ad4855c743daf",
+  "prompts": {},
+  "sessions": {
+    "s_7a3a88335d58b0": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1ac1e-ae8e-75d2-bdc6-7768a3340bfc",
+        "model": "gpt-6-astra"
+      },
+      "human_author": "Conner S <conner.smith@vanta.com>"
+    }
+  }
+}
