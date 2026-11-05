@@ -1,7 +1,7 @@
 # Personal agent workflows
 
-`AGENTS.override.md` contains general preferences and routes requests to five
-`conner-*` skills in `.agents/skills/`: ticket work, PR preparation, read-only
+`AGENTS.override.md` contains general push and authentication preferences.
+Five `conner-*` skills in `.agents/skills/` cover ticket work, PR preparation, read-only
 code review, stand-up drafts, and PR babysitting. Detailed PEX/SNOW rules live
 in references; the PR skill bundles the architecture diagram examples.
 

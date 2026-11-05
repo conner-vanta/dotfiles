@@ -29,4 +29,4 @@ planning, implementation, and validation. For SNOW work, follow the steps below.
    unless the user specifies another stopping point. For migrations, the repository
    migration skill governs implementation and verification.
 5. Load the sibling `conner-pr-workflow` skill before preparing the draft PR.
-   It owns SNOW titles, concise migration descriptions, Jira status, and Devin review.
+   It owns SNOW titles, concise migration descriptions, and Jira status.

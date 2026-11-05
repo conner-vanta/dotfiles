@@ -1,24 +1,6 @@
 # Conner’s Obsidian preferences
 
 Follow the repository’s `AGENTS.md` as well as these personal preferences.
-Load only the skills relevant to the current request from `.agents/skills/`:
-
-| Request                                     | Skill                                        |
-| ------------------------------------------- | -------------------------------------------- |
-| Do, work on, or start a PEX/SNOW ticket     | `conner-ticket-workflow`                     |
-| Create/update my PR or assess its readiness | `conner-pr-workflow`                         |
-| Review a GitHub PR                          | `conner-review-pr`                           |
-| Draft my daily stand-up update              | `conner-standup`                             |
-| Babysit my PR (including its stack)         | `conner-babysit-pr` and `conner-pr-workflow` |
-
-These skills add personal preferences to the repository’s shared workflows;
-they do not replace its implementation, testing, or security guidance.
-
-## PR readiness
-
-Every PR I author, including each stack layer, needs a clean Devin review of
-its latest head before it is ready to merge. Follow `conner-pr-workflow` for
-the review loop; report unavailable review as a blocker.
 
 # Git push authorization
 
