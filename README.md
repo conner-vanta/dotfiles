@@ -18,6 +18,30 @@ and [creation guidance](https://agentskills.io/skill-creation/best-practices).
 Obsidian supplies the shared `migrate-vitest-to-default`, `commit-and-pr`, and
 `babysit-pr` skills that these personal workflows build on.
 
+## Validate skills
+
+Install [uv](https://docs.astral.sh/uv/getting-started/installation/), then run:
+
+```sh
+bash scripts/validate-skills.sh
+```
+
+The script installs and runs the upstream [skills-ref](https://github.com/agentskills/agentskills/tree/main/skills-ref)
+validator, pinned to a Git commit in `pyproject.toml` with dependencies recorded
+in `uv.lock`. It validates every skill directory and fails if any skill is invalid
+or no skills are present. This checks skill format, not the correctness of the
+instructions. To update the validator, change its pinned revision and run `uv lock`.
+
+GitHub Actions runs **Validate skills** on every push and on pull requests,
+including drafts. The `main` ruleset requires this check from GitHub Actions
+before allowing an update. Push a new commit to a feature branch first and wait
+for validation; then merge its PR or push the validated commit to `main`.
+An unchecked direct push is rejected rather than accepted while CI runs.
+Branch protection is configured in GitHub repository settings, not by the workflow
+file itself.
+
+## Install
+
 Run `bash install.sh` as usual. After service setup, it copies the override to
 `/workspaces/obsidian/AGENTS.override.md` and the complete skill directories to
 `/workspaces/obsidian/.agents/skills/`. The `conner-*` names avoid collisions with

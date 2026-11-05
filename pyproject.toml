@@ -1,0 +1,10 @@
+[project]
+name = "conner-dotfiles-tools"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+  "skills-ref @ git+https://github.com/agentskills/agentskills.git@83021e2be457a9b6679148719c1f6074f0ad975e#subdirectory=skills-ref",
+]
+
+[tool.uv]
+package = false
