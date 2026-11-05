@@ -2,8 +2,10 @@
 
 `AGENTS.override.md` contains general push and authentication preferences.
 Five `conner-*` skills in `.agents/skills/` cover ticket work, PR preparation, read-only
-code review, stand-up drafts, and PR babysitting. Detailed PEX/SNOW rules live
-in references; the PR skill bundles the architecture diagram examples.
+code review, stand-up drafts, and PR babysitting. The ticket workflow applies to
+all Jira projects; SNOW work proceeds without requiring plan mode. Detailed
+PEX/SNOW PR formatting lives in references, and the PR skill bundles the
+architecture diagram examples.
 
 The layout follows the [Agent Skills specification](https://agentskills.io/specification)
 and [creation guidance](https://agentskills.io/skill-creation/best-practices).
