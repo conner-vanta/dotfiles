@@ -3,12 +3,24 @@ name: conner-babysit-pr
 description: Babysit Conner’s PRs and every PR in their stack, handle bot threads, and require clean latest-head Devin and 5/5 Greptile reviews. Use when Conner asks to babysit a PR or an identifiable current PR; not for a read-only review.
 ---
 
-# Babysit ("babysit {optional GitHub Pull Request Link or you can infer the Pull Request from the conversation context}")
+# Babysit Conner’s PRs
 
-Load the repository’s `.agents/skills/babysit-pr/SKILL.md` and follow its workflow. If unavailable, report the missing prerequisite. Additionally, be sure to reply to any Devin, Greptile, ai-tooling-app, or semgrep-code-vantainc comments directly in the thread. Do not resolve the comments. In your reply, do not include the text "after conner-vanta preauthorized this reply type without reviewing the draft." After addressing all comments, re-trigger Greptile and Devin reviews. It's important to get a 5/5 Greptile review score and Devin finds no issues. After a new Devin or Greptile review successfully runs, delete the comment that you used to re-trigger the Devin or Greptile review. Also, I noticed that Devin posts comments like "Devin Review found X issues" and "Starting Devin Review." for each review. Delete stale ones; only keep the latest one for each comment type. There should not be multiple for each of those comment types on the PR.
+Load the repository’s `.agents/skills/babysit-pr/SKILL.md` and the sibling
+`conner-pr-workflow` skill. If the repository skill is unavailable, report the
+missing prerequisite. Apply these preferences to its workflow:
 
-Also enforce the Devin review requirement in the sibling `conner-pr-workflow` skill: babysitting is not complete until Devin reports no issues found on the latest head commit of every PR being watched.
-
-Also, if there are multiple comments from ai-tooling-app that provide the "PeX audit-risk review", hide all of them as "outdated" except for the most recent one. Keep only the most recent one on the pull request.
-
-if the pull request is part of a GitHub stack, then babysit all of the pull requests in the stack.
+1. Resolve the PR from the supplied URL or conversation. If it belongs to a GitHub
+   stack, include every PR in that stack.
+2. Address findings and reply directly in each Devin, Greptile, ai-tooling-app,
+   or semgrep-code-vantainc thread. Leave threads unresolved. Do not include
+   “after conner-vanta preauthorized this reply type without reviewing the draft.”
+3. After addressing all comments, re-trigger Greptile and Devin. Require a 5/5
+   Greptile score and explicit no-issues Devin results for the latest head of
+   every watched PR, following `conner-pr-workflow`’s validation and retry loop.
+4. Once a new review successfully runs, delete the comment used to re-trigger it.
+   For Devin’s “Starting Devin Review” and “Devin Review found X issues” status
+   comments, keep only the latest of each type and delete stale duplicates.
+5. For duplicate ai-tooling-app “PeX audit-risk review” comments, keep the newest
+   visible and hide the older ones as outdated.
+6. Report remaining blockers. Babysitting is incomplete while any watched PR lacks
+   a clean latest-head Devin review or the required Greptile score.

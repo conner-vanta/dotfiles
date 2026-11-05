@@ -1,65 +1,42 @@
-# Jira ticket workflow (“do PEX-xxx”)
+# PEX ticket workflow
 
-When the user asks you to **do** a Jira ticket, or phrasing like **“do PEX-123”**, **“work on PEX-123”**, or **“start PEX-123”** (where `PEX-123` is a Jira issue key), treat that issue key as **`TICKET`** and follow this workflow **in order**. Do not skip steps unless the user explicitly changes scope.
+Use the requested issue key as `TICKET`. Follow these steps in order unless the
+user changes scope. Git and authenticated `acli` are prerequisites: if either
+fails, report the error and stop; never invent ticket content.
 
-## Preconditions
+1. **Update the default branch.** Check out `main`, or `master` if it is the
+   default and `main` does not exist. Pull using repository practice (fast-forward
+   only if that is the norm), preserving unrelated working-tree changes.
+2. **Prepare `conner/TICKET`.** Create the branch from the updated default branch.
+   If it already exists locally, check it out and rebase or merge the updated
+   default branch per repo practice; ask if ambiguous. Use a different naming
+   rule only when the user specifies one.
+3. **Read the ticket.** Run:
 
-- Assume a **git** repository and **Atlassian CLI (`acli`)** installed and already authenticated for Jira (`acli jira …` works).
-- If `acli` or `git` fails, report the error and stop; do not invent ticket text.
+   ```sh
+   acli jira workitem view TICKET --fields summary,description
+   ```
 
-## Steps
+   Treat command output as the source of truth. If required fields are empty or
+   the command errors, report that and stop.
 
-### 1. Update `main`
+4. **Plan from evidence.** Use only the fetched summary/description and targeted
+   code exploration. If the relevant area is unclear, ask the user for files or
+   directories before drafting a detailed plan; do not guess a file list. Cover
+   the goal, ordered tasks, affected areas, risks/unknowns, and verification.
+   Consider independently reviewable stacked PRs; strongly prefer splitting work
+   over 1,000 lines or across systems with different team ownership. Record
+   compatibility and deployment order in the PR’s Deployment section.
+5. **Present the plan before substantial edits**, unless the user already asked
+   for immediate implementation after planning. Include the branch and a one-line
+   ticket summary. Use distinct checklist items with concrete repository commands
+   or entry points when known:
 
-- Check out **`main`** (or **`master`** if that is the default branch and `main` does not exist).
-- Run **`git pull`** (with fast-forward only if that is the repo norm; otherwise pull as the project usually does) so **`TICKET`** work starts from current upstream.
+   - [ ] **Unit tests:** add/update coverage for the ticket; name expected suites/files.
+   - [ ] **Passing tests:** run relevant unit tests and iterate until green.
+   - [ ] **Linter:** run the project linter and fix reported issues.
+   - [ ] **oxfmt:** format every changed file and list the formatted files.
 
-### 2. Create branch `conner/TICKET`
-
-- From the updated default branch, create and check out a new branch named exactly:
-
-  **`conner/TICKET`**
-
-  Example: for `PEX-742`, the branch is **`conner/PEX-742`**.
-
-- If that branch already exists locally, check it out and **rebase or merge** from the updated default branch per repo practice, or ask the user if there is ambiguity.
-
-### 3. Load ticket summary and description
-
-- Run (substitute the real issue key for `TICKET`):
-
-  ```bash
-  acli jira workitem view TICKET --fields summary,description
-  ```
-
-- Use the **command output as the source of truth** for summary and description. If the command errors or returns empty fields, say so and do not fabricate scope.
-
-### 4. Plan from the ticket
-
-- Build a **concrete implementation plan** grounded only in:
-  - the fetched **summary** and **description**, and
-  - what you can infer from the **current codebase** after brief, targeted exploration if needed.
-- If you are **not sure which files or areas are relevant** (e.g. the ticket is vague, the repo is large, or multiple subsystems could apply), **stop and ask the user**—prompt them to list or point to **relevant files or directories** (paths in the repo, links, or paste) before you draft a detailed plan. Do not guess a file list and proceed as if it were certain.
-- The plan should include: goal, ordered tasks, files or areas likely to touch, risks or unknowns, and how to verify (tests, manual checks). Keep it proportional to ticket size.
-- The plan **must explicitly include** all of the following (with concrete commands or entry points taken from the repo when you know them, e.g. `package.json`, `Makefile`, CI config):
-  - **Unit tests**: add or update unit tests for the behavior in the ticket; say which suites or files you expect to touch.
-  - **Green tests**: run the relevant unit test command(s), **iterate until they pass**, and note what you ran.
-  - **Linter**: run the project linter on the work, fix reported issues, and note what you ran.
-  - **`oxfmt`**: run **`oxfmt`** on **all changed files** (format in place or per project convention), and list which files were formatted.
-- Consider breaking the task into multiple discrete pull requests that can be stacked on top of each other and are independently reviewable. Consider things like: if multiple teams are required to review a pull request, can we split this pull request into multiple so that each pull request only requires review from one team. if a pull request is over 1,000 lines of code or span multiple systems owned by different teams, we should strongly prefer to split it into multiple pull requests. Think about any backward compatibility and deployment order requirements these pull requests, and fill in those details in the deployment section (see the `conner-pr-workflow` skill)
-
-### 5. Present the plan
-
-- **Present the plan to the user** in clear sections before writing large amounts of code, unless they have already asked you to implement immediately after planning.
-- Include the **branch name** (`conner/TICKET`) and a **one-line reminder** of the ticket summary so context is obvious.
-- The presented plan must call out **unit tests**, **passing tests**, **linter**, and **`oxfmt` on changed files** as distinct checklist items so completion criteria are unambiguous.
-
-### 6. When you implement after the plan
-
-- Follow the plan, including: **write/update unit tests**, **run tests until they pass**, **run the linter and fix issues**, and **run `oxfmt` on every file you changed** before considering the work done. Summarize commands run and outcomes in your final message.
-- Raise a **GitHub pull request** for these changes using the sibling `conner-pr-workflow` skill.
-
-## Naming
-
-- **`TICKET`**: the Jira issue key from the user message (e.g. `PEX-123`).
-- **Branch**: always **`conner/<TICKET>`** unless the user specifies a different naming rule in that thread.
+6. **Implement and verify.** Follow the plan, complete each check above, and
+   summarize commands and outcomes. Load the sibling `conner-pr-workflow` skill
+   to create the GitHub PR with the PEX format and review requirements.
