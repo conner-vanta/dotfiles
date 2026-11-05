@@ -1,0 +1,21 @@
+pyproject.toml
+  s_7a3a88335d58b0::t_57ad416201e446 1-10
+uv.lock
+  s_7a3a88335d58b0::t_95cc4cb624ef57 1-65
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.9",
+  "base_commit_sha": "a2a4b77d6dab93816bf99ea373eb0ab53db839b6",
+  "prompts": {},
+  "sessions": {
+    "s_7a3a88335d58b0": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1ac1e-ae8e-75d2-bdc6-7768a3340bfc",
+        "model": "gpt-6-astra"
+      },
+      "human_author": "Conner S <conner.smith@vanta.com>"
+    }
+  }
+}
