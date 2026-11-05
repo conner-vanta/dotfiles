@@ -99,6 +99,15 @@ SOURCE_AGENTS_OVERRIDE="${SCRIPT_DIR}/AGENTS.override.md"
 SOURCE_SKILLS="${SCRIPT_DIR}/.agents/skills"
 TARGET_SKILLS="/workspaces/obsidian/.agents/skills"
 
+# Keep personal skills out of Obsidian commits without changing its shared ignore file.
+# Resolve the Git path so this also works when .git is a worktree pointer file.
+OBSIDIAN_EXCLUDE="$(git -C /workspaces/obsidian rev-parse --path-format=absolute --git-path info/exclude)"
+PERSONAL_SKILLS_PATTERN='/.agents/skills/conner-*/'
+mkdir -p "$(dirname "$OBSIDIAN_EXCLUDE")"
+if [[ ! -f "$OBSIDIAN_EXCLUDE" ]] || ! grep -Fxq "$PERSONAL_SKILLS_PATTERN" "$OBSIDIAN_EXCLUDE"; then
+  printf '\n%s\n' "$PERSONAL_SKILLS_PATTERN" >> "$OBSIDIAN_EXCLUDE"
+fi
+
 echo "Installing agent configuration"
 if [[ ! -f "$SOURCE_AGENTS_OVERRIDE" ]]; then
   echo "Missing ${SOURCE_AGENTS_OVERRIDE}; cannot install AGENTS override." >&2

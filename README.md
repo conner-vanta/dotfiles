@@ -45,5 +45,9 @@ file itself.
 Run `bash install.sh` as usual. After service setup, it copies the override to
 `/workspaces/obsidian/AGENTS.override.md` and the complete skill directories to
 `/workspaces/obsidian/.agents/skills/`. The `conner-*` names avoid collisions with
-Obsidian’s shared skills. Re-running refreshes these copies; files removed or
+Obsidian’s shared skills. Installation adds `/.agents/skills/conner-*/` to
+Obsidian’s local Git exclude file, keeping personal skills out of commits without
+editing the shared `.gitignore`. Re-running does not duplicate the ignore rule.
+Already-tracked files are unaffected by ignore rules.
+Re-running refreshes these copies; files removed or
 renamed in dotfiles must be removed from the destination manually.
