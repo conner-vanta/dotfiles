@@ -1,0 +1,19 @@
+README.md
+  s_7a3a88335d58b0::t_7b1868f84ef35e 4-5,11-15
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.9",
+  "base_commit_sha": "085eaf3db2cc3c9f26c2ab08665c4cc9cdc2460a",
+  "prompts": {},
+  "sessions": {
+    "s_7a3a88335d58b0": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1ac1e-ae8e-75d2-bdc6-7768a3340bfc",
+        "model": "gpt-6-astra"
+      },
+      "human_author": "Conner S <conner.smith@vanta.com>"
+    }
+  }
+}
