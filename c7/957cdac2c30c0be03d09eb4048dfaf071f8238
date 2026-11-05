@@ -1,0 +1,23 @@
+.agents/skills/conner-babysit-pr/SKILL.md
+  s_7a3a88335d58b0::t_9166c3c68dabbd 6,8-10,12-26
+.agents/skills/conner-pr-workflow/references/pex-pr.md
+  s_7a3a88335d58b0::t_a868fe207ead19 1-30,35,39,43,45,51
+.agents/skills/conner-ticket-workflow/references/pex.md
+  s_7a3a88335d58b0::t_8290eabd1e59eb 1-42
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.9",
+  "base_commit_sha": "c7957cdac2c30c0be03d09eb4048dfaf071f8238",
+  "prompts": {},
+  "sessions": {
+    "s_7a3a88335d58b0": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1ac1e-ae8e-75d2-bdc6-7768a3340bfc",
+        "model": "gpt-6-astra"
+      },
+      "human_author": "Conner S <conner.smith@vanta.com>"
+    }
+  }
+}
