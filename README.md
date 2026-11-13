@@ -1,13 +1,13 @@
 # Personal agent workflows
 
 `AGENTS.override.md` contains general push and authentication preferences.
-Six `conner-*` skills in `.agents/skills/` cover ticket work, PEX PR preparation, read-only
+Six `conner-*` skills in `.agents/skills/` cover ticket work, PEX/SNOW PR preparation, read-only
 code review, stand-up drafts, PR babysitting, and Snowplow batch pickup. The ticket workflow applies to
 all Jira projects; SNOW work proceeds without requiring plan mode.
 The ticket skill loads separate `snow.md` and `pex.md` references. SNOW uses the
-repository PR template directly, without diagrams or the personal PEX PR skill.
-The PEX PR skill requires local Greptile, Codex, and Claude reviews and feedback
-resolution before draft creation. It bundles the
+repository PR template without diagrams. The shared PR skill requires local
+Greptile, Codex, and Claude reviews and feedback resolution before draft creation
+for both PEX and SNOW, including each PR in a Snowplow batch. It bundles the
 [Ona review commands](.agents/skills/conner-pr-workflow/references/local-ai-reviews.md)
 from the AI Code Reviews Guru card alongside its architecture diagram examples.
 

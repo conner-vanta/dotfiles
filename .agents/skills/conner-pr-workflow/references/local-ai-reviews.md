@@ -7,6 +7,9 @@ loop are Conner's requirements for this PR workflow, supplemented by Obsidian's
 local review skills. Reading the live card is optional; its unavailability must
 not prevent use of these saved instructions.
 
+Apply this review workflow to both PEX and SNOW PRs, including every PR produced
+by a Snowplow batch. Each PR needs reviews of its own intended diff.
+
 ## Commands preserved from Guru
 
 Enter these commands in the indicated agent session opened in the Ona checkout;
@@ -76,7 +79,7 @@ existing authentication. Do not use `--include` to add uncommitted files.
    actionable findings remain and every finding has a recorded disposition.
 3. Before creating the draft, summarize each reviewer's result, the reviewed base
    and head SHAs, fixes made, dismissed findings and reasons, and validation in
-   the working session. Preserve the PEX PR body template; this review record
+   the working session. Preserve the applicable project's PR template; this review record
    does not require another PR section. Then follow `commit-and-pr` to push and
    create the draft. These AI reviews supplement human review.
 

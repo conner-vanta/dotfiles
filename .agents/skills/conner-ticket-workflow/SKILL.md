@@ -13,7 +13,7 @@ the error and stop; never invent ticket content.
 Before starting, read only the reference matching the ticket’s project:
 
 - **SNOW:** [SNOW workflow](references/snow.md), including proceeding without
-  plan mode and using SNOW’s PR requirements directly.
+  plan mode, shared local reviews before draft creation, and SNOW’s PR requirements.
 - **PEX:** [PEX workflow](references/pex.md), including the PEX PR workflow.
 - **Other projects:** follow repository conventions without PEX/SNOW overrides.
 
@@ -59,7 +59,9 @@ Before starting, read only the reference matching the ticket’s project:
    planning rules, including SNOW’s exemption from plan mode. Honor an explicit
    request from the user to plan only or stop before implementation.
 
-6. **Implement, verify, and open a draft PR.** Follow the plan, complete each check,
-   and summarize commands and outcomes. Use the selected project reference for
-   PR formatting, labels, and Jira status. For other projects, use the repository’s
-   `commit-and-pr` skill and PR conventions directly.
+6. **Implement, verify, review, and open a draft PR.** Follow the plan, complete
+   each check, and summarize commands and outcomes. For PEX and SNOW, complete
+   `conner-pr-workflow`'s local reviews and feedback resolution before creating
+   the draft. Use the selected project reference for PR formatting, labels, and
+   Jira status. For other projects, use the repository’s `commit-and-pr` skill
+   and PR conventions directly.

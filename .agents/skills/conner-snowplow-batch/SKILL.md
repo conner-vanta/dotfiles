@@ -15,7 +15,8 @@ creating or editing the skill does not start a batch.
 - Use the requested positive integer as the batch size. If omitted, default to
   **3** and state that choice. “More” means a new batch of unassigned tickets,
   not resuming tickets already assigned to the user.
-- Read the sibling `conner-ticket-workflow/SKILL.md` and its `references/snow.md`.
+- Read the sibling `conner-ticket-workflow/SKILL.md`, its `references/snow.md`,
+  and `conner-pr-workflow/SKILL.md` for the required reviews before draft creation.
   Confirm git, authenticated `acli`, subagent tools, and the repository’s required
   migration/verification tools are available before claiming tickets. Resolve the
   user's Jira identity with `acli jira auth status`; use `@me` only if the CLI is
@@ -92,15 +93,20 @@ Give each subagent:
 - Its exclusive worktree path and branch, plus the updated base revision. State
   that the parent completed default-branch and branch setup, so the agent should
   continue at ticket loading/scope confirmation rather than redo checkout steps.
-- Instructions to follow `conner-ticket-workflow` and `references/snow.md`, and
-  the repository migration skill when the ticket requires it. SNOW work needs
-  no plan-mode gate and does not use the personal PEX PR workflow or diagrams.
-- The full completion scope: implement, run required verification, commit/push,
-  create a draft PR with `[SNOW-XXX]` and `proj-snowplow`, and verify the Jira
-  transition to In Progress without moving a later status backward.
+- Instructions to follow `conner-ticket-workflow`, `references/snow.md`, and
+  `conner-pr-workflow`'s shared local review step, plus the repository migration
+  skill when the ticket requires it. SNOW work needs no plan-mode gate, PEX
+  template, or diagrams.
+- The full completion scope: implement, run required verification, commit, run
+  local Greptile, Codex, and Claude reviews for this ticket's diff, incorporate
+  feedback and complete any required re-reviews, then push and create a draft PR
+  with `[SNOW-XXX]` and `proj-snowplow`. Verify the Jira transition to In Progress
+  without moving a later status backward. A missing review blocks that ticket's
+  draft unless Conner explicitly waives it.
 - Instructions to stay within its ticket, preserve other agents’ changes, and
-  return its PR URL, validation results, retained timing/isolation evidence, and
-  any blockers. Do not merge PRs or mark tickets Done merely for opening drafts.
+  return its PR URL, validation and local-review results, retained timing/isolation
+  evidence, and any blockers. Do not merge PRs or mark tickets Done merely for
+  opening drafts.
 
 Coordinate expensive builds, tests, and benchmarks across subagents. Baseline and
 after timings must use comparable resources without competing batch workloads;

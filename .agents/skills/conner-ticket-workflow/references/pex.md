@@ -8,4 +8,5 @@ feedback resolution, PEX body template, architecture diagrams, frontend evidence
 security-risk label, and deployment-order requirements.
 
 Prefix the PR title with `[BE]`, `[FE]`, or `[BE + FE]` for the affected application
-layers. These PEX requirements do not apply to SNOW tickets or other Jira projects.
+layers. The PEX formatting requirements do not apply to SNOW tickets or other
+Jira projects; the local review step is shared with SNOW.
