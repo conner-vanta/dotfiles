@@ -1,0 +1,25 @@
+.agents/skills/conner-pr-workflow/SKILL.md
+  s_108d493906c95f::t_75563927892710 3,12-22
+.agents/skills/conner-pr-workflow/references/local-ai-reviews.md
+  s_108d493906c95f::t_d806ee46b90df4 1-93
+.agents/skills/conner-ticket-workflow/references/pex.md
+  s_108d493906c95f::t_9293ba8ab963f6 6-7
+README.md
+  s_108d493906c95f::t_d4802374b48e33 9-12,21-23
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.9",
+  "base_commit_sha": "0b0f2fe2a5a78be12474163d2bdbfaf29413bd08",
+  "prompts": {},
+  "sessions": {
+    "s_108d493906c95f": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "s_108d493906c95f",
+        "model": "unknown"
+      },
+      "human_author": "Conner S <conner.smith@vanta.com>"
+    }
+  }
+}
