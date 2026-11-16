@@ -2,8 +2,9 @@
 
 Source: [AI Code Reviews](https://app.getguru.com/card/Tzgzb46c/AI-Code-Reviews),
 retrieved November 13, 2026; card last modified November 10, 2026. The command
-table below preserves the card's Ona instructions. The preparation and feedback
-loop are Conner's requirements for this PR workflow, supplemented by Obsidian's
+table below preserves the card's Ona instructions for the required reviewers.
+The preparation and feedback loop are Conner's requirements for this PR workflow,
+supplemented by Obsidian's
 local review skills. Reading the live card is optional; its unavailability must
 not prevent use of these saved instructions.
 
@@ -19,14 +20,12 @@ they are agent commands, not shell commands.
 | --- | --- | --- |
 | Greptile | `/greptile-code-review` skill | None listed |
 | Codex | `/review` command | `$local-code-review` skill |
-| Claude Code | `/code-review` slash command | `/local-code-review` skill |
 
 Use one command per reviewer, with an explicit request to review the intended
 base-to-head diff locally and return findings without edits or GitHub comments.
-Prefer the shared `local-code-review` skill for Codex and Claude when available;
+Prefer the shared `local-code-review` skill for Codex when available;
 it loads Obsidian's reviewer guidance and applicable `CODE_REVIEW*.md` rules.
-Run Codex and Claude in their respective clients: two invocations of the shared
-skill in the same client do not provide both reviews. If a command requires an
+Run the Codex review in the Codex client. If a command requires an
 existing PR, use its listed local skill alternative; do not create a draft to
 obtain the review. PR comment triggers and automatic PR reviews do not satisfy
 this pre-draft step.
@@ -54,7 +53,7 @@ existing authentication. Do not use `--include` to add uncommitted files.
    Complete relevant validation and commit the intended changes with hooks
    enabled. Greptile does not review uncommitted work; commit intended fixes
    before each subsequent review round as well.
-2. Record the base ref, its commit SHA, and `git rev-parse HEAD`. Give all three
+2. Record the base ref, its commit SHA, and `git rev-parse HEAD`. Give both
    reviewers the same `<base-ref>...HEAD` target. Keep that target unchanged
    while collecting their results; unrelated working-tree edits are outside it.
    For the shared local skill, set `DOC_TOOLS_BASE_REF` in each reviewer session
@@ -67,15 +66,15 @@ existing authentication. Do not use `--include` to add uncommitted files.
 
 ## Incorporate feedback and finish
 
-1. Combine findings from all three reviewers and deduplicate them while retaining
+1. Combine findings from both reviewers and deduplicate them while retaining
    their sources. Check each finding against the code and applicable guidance.
    Fix confirmed issues, and record a concrete reason for dismissing a false
    positive, duplicate, or inapplicable suggestion. Do not silently drop feedback
    or apply suggestions that would introduce a regression. Surface unresolved
    findings to Conner and keep draft creation blocked while they remain unresolved.
-2. Run relevant validation for the fixes, commit them, and rerun all three
+2. Run relevant validation for the fixes, commit them, and rerun both
    reviewers on the resulting diff. If the base or head changes, refresh the
-   reviews so all three cover the final committed snapshot. Continue until no
+   reviews so both cover the final committed snapshot. Continue until no
    actionable findings remain and every finding has a recorded disposition.
 3. Before creating the draft, summarize each reviewer's result, the reviewed base
    and head SHAs, fixes made, dismissed findings and reasons, and validation in

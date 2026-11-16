@@ -1,6 +1,6 @@
 ---
 name: conner-pr-workflow
-description: Prepare or update Conner’s PEX and SNOW pull requests with local Greptile, Codex, and Claude reviews before draft creation and project-specific PR requirements. Use for PRs tied to PEX or Snowplow tickets, including Snowplow batches; not for other Jira projects or read-only code review.
+description: Prepare or update Conner’s PEX and SNOW pull requests with local Greptile and Codex reviews before draft creation and project-specific PR requirements. Use for PRs tied to PEX or Snowplow tickets, including Snowplow batches; not for other Jira projects or read-only code review.
 ---
 
 # Prepare a PEX or SNOW pull request
@@ -10,11 +10,11 @@ security-label standards when available. These personal preferences specialize
 that workflow for PEX and SNOW work. An explicit user instruction takes precedence.
 
 Before creating a draft PR, read and complete the
-[local AI review workflow](references/local-ai-reviews.md). Run Greptile, Codex,
-and Claude locally on Ona and incorporate their feedback before the shared
+[local AI review workflow](references/local-ai-reviews.md). Run Greptile and Codex
+locally on Ona and incorporate their feedback before the shared
 workflow's PR-creation step, including any stack command that creates drafts.
 Conner authorizes sending the committed branch diff to Greptile for this workflow.
-Keep the draft uncreated until all three reviews are complete and every finding
+Keep the draft uncreated until both reviews are complete and every finding
 has a disposition, unless Conner explicitly waives a missing review. The bundled
 reference preserves the commands from the
 [AI Code Reviews Guru card](https://app.getguru.com/card/Tzgzb46c/AI-Code-Reviews)

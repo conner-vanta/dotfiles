@@ -3,7 +3,7 @@
 Apply these rules to PEX tickets alongside the shared Jira workflow.
 
 For draft PR creation or updates, load the sibling `conner-pr-workflow` skill.
-It owns the local Greptile, Codex, and Claude review step before draft creation,
+It owns the local Greptile and Codex review step before draft creation,
 feedback resolution, PEX body template, architecture diagrams, frontend evidence,
 security-risk label, and deployment-order requirements.
 

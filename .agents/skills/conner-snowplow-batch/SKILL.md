@@ -98,7 +98,7 @@ Give each subagent:
   skill when the ticket requires it. SNOW work needs no plan-mode gate, PEX
   template, or diagrams.
 - The full completion scope: implement, run required verification, commit, run
-  local Greptile, Codex, and Claude reviews for this ticket's diff, incorporate
+  local Greptile and Codex reviews for this ticket's diff, incorporate
   feedback and complete any required re-reviews, then push and create a draft PR
   with `[SNOW-XXX]` and `proj-snowplow`. Verify the Jira transition to In Progress
   without moving a later status backward. A missing review blocks that ticket's

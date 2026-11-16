@@ -14,7 +14,7 @@ Vitest migration. For migrations, follow the repository’s
 ## Draft pull request
 
 Load the sibling `conner-pr-workflow` skill and complete its shared local
-Greptile, Codex, and Claude reviews and feedback resolution before creating a
+Greptile and Codex reviews and feedback resolution before creating a
 draft PR. This applies to individual SNOW tickets and every PR in a Snowplow
 batch. Then use the repository’s `commit-and-pr` skill and current PR template
 with the SNOW requirements below. SNOW PRs do not require diagrams or PEX’s

@@ -6,7 +6,7 @@ code review, stand-up drafts, PR babysitting, and Snowplow batch pickup. The tic
 all Jira projects; SNOW work proceeds without requiring plan mode.
 The ticket skill loads separate `snow.md` and `pex.md` references. SNOW uses the
 repository PR template without diagrams. The shared PR skill requires local
-Greptile, Codex, and Claude reviews and feedback resolution before draft creation
+Greptile and Codex reviews and feedback resolution before draft creation
 for both PEX and SNOW, including each PR in a Snowplow batch. It bundles the
 [Ona review commands](.agents/skills/conner-pr-workflow/references/local-ai-reviews.md)
 from the AI Code Reviews Guru card alongside its architecture diagram examples.
