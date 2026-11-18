@@ -8,8 +8,16 @@ SNOW work does not require plan mode or a plan-approval pause. Give a concise
 implementation outline in the current mode, then proceed through implementation
 and verification unless the user explicitly requests planning only or another
 stopping point. Determine scope from the ticket; not every SNOW ticket is a
-Vitest migration. For migrations, follow the repository’s
-`migrate-vitest-to-default` skill and its strict isolation verification requirements.
+Vitest migration. Select the repository migration skill from the ticket’s scope:
+
+- Default Vitest configuration migrations (SNOW-1): follow
+  `migrate-vitest-to-default` and its strict isolation verification requirements.
+- `@vanta/testing` level/runtime entrypoint migrations (including SNOW-1320): follow
+  `skills/workflows/migrate-to-vanta-testing/SKILL.md` (or its installed skill path)
+  and its references. Preserve current test classification and behavior, verify
+  before/after file and test inventories, and run the required scoped checks.
+  Do not impose default-config migration timing or strict-isolation requirements
+  solely because the workspace uses Vitest.
 
 ## Draft pull request
 
@@ -36,7 +44,7 @@ and detailed verification receipts. Use
 [SNOW-13 PR #216963](https://github.com/VantaInc/obsidian/pull/216963) as a style
 example, not as a source of results to copy.
 
-For Vitest migration PRs:
+For default Vitest configuration migration PRs:
 
 - **Changes:** briefly describe the runner change and any necessary test or
   configuration adaptations. Do not call it configuration-only if tests or
@@ -56,7 +64,12 @@ For Vitest migration PRs:
 - **AI Model used and major prompts used:** identify the actual model and tool
   concisely, for example `GPT-6 via Codex` when accurate.
 
-Keep test inventories, diagnostics, reports, logs, and reproduction receipts in
+For `@vanta/testing` entrypoint migration PRs, follow `migrate-to-vanta-testing`’s
+PR reference for classification, naming changes, file/test count parity, config
+changes, and edge cases. Include the scoped validation results and any reusable
+migration-skill improvements discovered during the work.
+
+Keep detailed inventories, diagnostics, reports, logs, and reproduction receipts in
 the retained verification artifacts rather than expanding the PR description.
 Still perform every required check. Disclose material failures, skipped required
 checks, or unresolved limitations; concise presentation must not imply a pass
