@@ -1,0 +1,25 @@
+.agents/skills/conner-snowplow-batch/SKILL.md
+  s_a534874ff32d1c::t_60461dccc24a12 3,8-9,18-19,32,36,40-47,113-133,137,139-140,148-149
+.agents/skills/conner-ticket-workflow/SKILL.md
+  s_a534874ff32d1c::t_c174868561b197 39-40
+.agents/skills/conner-ticket-workflow/references/snow.md
+  s_a534874ff32d1c::t_39731f46d6cef2 11-15,27
+README.md
+  s_a534874ff32d1c::t_6b4ebc1f53370a 16-19,23
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.9",
+  "base_commit_sha": "7e9e86d090719130192fb60236a86afe64f9696f",
+  "prompts": {},
+  "sessions": {
+    "s_a534874ff32d1c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1ef69-0528-7160-a7ff-e77c38d22f87",
+        "model": "gpt-6-astra"
+      },
+      "human_author": "Conner S <conner.smith@vanta.com>"
+    }
+  }
+}
