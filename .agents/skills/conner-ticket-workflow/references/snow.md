@@ -8,16 +8,11 @@ SNOW work does not require plan mode or a plan-approval pause. Give a concise
 implementation outline in the current mode, then proceed through implementation
 and verification unless the user explicitly requests planning only or another
 stopping point. Determine scope from the ticket; not every SNOW ticket is a
-Vitest migration. Select the repository migration skill from the ticket’s scope:
-
-- Default Vitest configuration migrations (SNOW-1): follow
-  `migrate-vitest-to-default` and its strict isolation verification requirements.
-- `@vanta/testing` level/runtime entrypoint migrations (including SNOW-1320): follow
-  `skills/workflows/migrate-to-vanta-testing/SKILL.md` (or its installed skill path)
-  and its references. Preserve current test classification and behavior, verify
-  before/after file and test inventories, and run the required scoped checks.
-  Do not impose default-config migration timing or strict-isolation requirements
-  solely because the workspace uses Vitest.
+migration. For `@vanta/testing` level/runtime entrypoint migrations (including
+SNOW-1320), follow `skills/workflows/migrate-to-vanta-testing/SKILL.md` (or its
+installed skill path) and its references. Preserve current test classification
+and behavior, verify before/after file and test inventories, and run the required
+scoped checks.
 
 ## Draft pull request
 
@@ -29,7 +24,7 @@ with the SNOW requirements below. SNOW PRs do not require diagrams or PEX’s
 template.
 
 - Prefix the title with the actual ticket key, for example
-  `[SNOW-6] Migrate cloud-data-capture-service tests to the default Vitest configuration`.
+  `[SNOW-763] Migrate ui-kit-agent-tools tests to @vanta/testing`.
 - Add the `proj-snowplow` GitHub label to every SNOW PR, including drafts and
   non-migration work, alongside the required security-risk label. Verify both
   labels after creation.
@@ -43,26 +38,6 @@ Prefer one or two sentences per section and omit repeated facts, boilerplate,
 and detailed verification receipts. Use
 [SNOW-13 PR #216963](https://github.com/VantaInc/obsidian/pull/216963) as a style
 example, not as a source of results to copy.
-
-For default Vitest configuration migration PRs:
-
-- **Changes:** briefly describe the runner change and any necessary test or
-  configuration adaptations. Do not call it configuration-only if tests or
-  implementation code changed.
-- **Motivation:** link the ticket, explain the benefit, and report the measured
-  before/after duration. Keep the overall duration improvement percentage and
-  before/after values bold in the opening paragraph, above the timing table;
-  do not move or repeat the percentage below the table. Retain the compact timing table with every reported
-  phase and a short measurement command/context paragraph.
-- **Testing:** after a successful strict check, write
-  `Strict verification passed, using the @vanta/testing test isolation verifier.`
-  Then include a fenced shell block containing the exact
-  `just verify-test-isolation` CLI command that ran, including the workspace,
-  project selection, and other options actually used. Fill in the real tool
-  name and command; never leave `{tool name}` or `{tool cmd}` placeholders.
-- **Deployment:** one short statement of actual dependencies or rollout needs.
-- **AI Model used and major prompts used:** identify the actual model and tool
-  concisely, for example `GPT-6 via Codex` when accurate.
 
 For `@vanta/testing` entrypoint migration PRs, follow `migrate-to-vanta-testing`’s
 PR reference for classification, naming changes, file/test count parity, config

@@ -36,11 +36,8 @@ Before starting, read only the reference matching the ticket’s project:
 4. **Determine scope and relevant skills.** Use the fetched summary/description
    and targeted code exploration. If the relevant area is unclear, ask the user
    for files or directories before drafting a detailed plan; do not guess a file
-   list. For default Vitest configuration migrations, load the repository’s
-   `migrate-vitest-to-default` skill and its references, including the test isolation
-   verifier guidance. For `@vanta/testing` level/runtime entrypoint migrations,
-   load `skills/workflows/migrate-to-vanta-testing/SKILL.md` (or its installed skill
-   path) and its references instead. The selected skill governs migration
+   list. For `@vanta/testing` level/runtime entrypoint migrations, load
+   `skills/workflows/migrate-to-vanta-testing/SKILL.md` (or its installed skill path) and its references. The selected skill governs migration
    implementation and verification. Do not assume every SNOW ticket is a migration.
    If required tooling is missing after updating the checkout, report the prerequisite instead
    of inventing a replacement workflow.

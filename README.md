@@ -13,12 +13,14 @@ from the AI Code Reviews Guru card alongside its architecture diagram examples.
 
 Say “pick up a new batch of snowplow tickets” or “do more snowplow tickets” to
 use `conner-snowplow-batch`. It defaults to three tickets, or accepts an explicit
-count, ranks unassigned SNOW-1 children by the blocker counts in their titles,
-assigns them to you, and delegates each to a subagent in a separate worktree.
+count, ranks unassigned SNOW-1320 children by test-file count, assigns them to
+you, and delegates each @vanta/testing migration to a subagent in a separate
+worktree through verification and draft PR creation. For example, say “do 5 more
+snowplow tickets” or “use $conner-snowplow-batch to migrate 3 tickets”.
 
 The layout follows the [Agent Skills specification](https://agentskills.io/specification)
 and [creation guidance](https://agentskills.io/skill-creation/best-practices).
-Obsidian supplies the shared `migrate-vitest-to-default`, `commit-and-pr`,
+Obsidian supplies the shared `migrate-to-vanta-testing`, `commit-and-pr`,
 `greptile-code-review`, `local-code-review`, and `babysit-pr` skills that these
 personal workflows build on.
 
