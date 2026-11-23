@@ -1,0 +1,25 @@
+.agents/skills/conner-pr-workflow/SKILL.md
+  s_b4b7c770229198::t_2438fcb629c207 29,31-32
+.agents/skills/conner-snowplow-batch/SKILL.md
+  s_b4b7c770229198::t_34d1e7d3706d09 3,9-11,100-104,106-107,127,138,144-174
+.agents/skills/conner-ticket-workflow/references/snow.md
+  s_b4b7c770229198::t_068bb4faf140e0 27-29,33-34
+README.md
+  s_b4b7c770229198::t_17582af14755d2 18-19
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.9",
+  "base_commit_sha": "383706481a2ce1a201e45aeffad9c6eb2b643d2a",
+  "prompts": {},
+  "sessions": {
+    "s_b4b7c770229198": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "s_b4b7c770229198",
+        "model": "unknown"
+      },
+      "human_author": "Conner S <conner.smith@vanta.com>"
+    }
+  }
+}
