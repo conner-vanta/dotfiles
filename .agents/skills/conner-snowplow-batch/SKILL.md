@@ -1,13 +1,14 @@
 ---
 name: conner-snowplow-batch
-description: Pick up unassigned Snowplow tickets from SNOW-1320 (@vanta/testing migration), assign them to the user, and delegate one ticket per subagent through migration and draft PR creation. Use for “pick up a new batch of snowplow tickets”, “do more snowplow tickets”, or a request to take on a specified number of Snowplow tickets. Not for read-only backlog inspection or implementing a single named ticket.
+description: Pick up unassigned Snowplow tickets from SNOW-1320 (@vanta/testing migration), delegate the migrations, and publish one or two draft PRs grouped by Approval Bot eligibility. Use for “do a batch of Snowplow tickets”, “do more Snowplow tickets”, or a request to take on a specified number of Snowplow tickets. Not for read-only backlog inspection or implementing a single named ticket.
 ---
 
 # Pick up a Snowplow batch
 
 Select work from [SNOW-1320](https://vanta.atlassian.net/browse/SNOW-1320),
-claim it for the user, and carry each ticket through implementation, verification, and draft PR creation
-using subagents. This skill authorizes delegation when invoked;
+claim it for the user, and delegate implementation and verification per ticket.
+Combine the finished changes into at most two draft PRs for the whole batch.
+This skill authorizes delegation when invoked;
 creating or editing the skill does not start a batch.
 
 ## 1. Establish the batch
@@ -96,19 +97,14 @@ Give each subagent:
 - Its exclusive worktree path and branch, plus the updated base revision. State
   that the parent completed default-branch and branch setup, so the agent should
   continue at ticket loading/scope confirmation rather than redo checkout steps.
-- Instructions to follow `conner-ticket-workflow`, `references/snow.md`, and
-  `conner-pr-workflow`'s shared local review step, plus the repository migration
-  skill selected below. SNOW work needs no plan-mode gate, PEX template, or diagrams.
-- The full completion scope: implement, run required verification, commit, run
-  local Greptile and Codex reviews for this ticket's diff, incorporate
-  feedback and complete any required re-reviews, then push and create a draft PR
-  with `[SNOW-XXX]` and `proj-snowplow`. Verify the Jira transition to In Progress
-  without moving a later status backward. A missing review blocks that ticket's
-  draft unless Conner explicitly waives it.
+- Instructions to follow the implementation guidance in `conner-ticket-workflow`,
+  `references/snow.md`, and the repository migration skill selected below.
+  SNOW work needs no plan-mode gate, PEX template, or diagrams.
+- Implement, run the required verification, and commit locally. Leave publishing,
+  combined-diff reviews, and Jira status transitions to the parent.
 - Instructions to stay within its ticket, preserve other agents’ changes, and
-  return its PR URL, validation and local-review results, migration evidence
-  required by the selected skill, and any blockers. Do not merge PRs or mark
-  tickets Done merely for opening drafts.
+  return its commit SHA(s), validation results, migration evidence required by
+  the selected skill, and any blockers.
 
 ### Perform the @vanta/testing migration
 
@@ -128,7 +124,7 @@ and merged in [PR #227850](https://github.com/VantaInc/obsidian/pull/227850).
   typecheck, and lint plus the skill’s required checks. Retain classification,
   rename, count-parity, and edge-case evidence for the PR.
 - If the work reveals a reusable gap, update the repository migration skill or
-  its relevant reference in the ticket’s PR and describe the finding. Keep
+  its relevant reference and describe the finding for the batch PR. Keep
   package-specific details in PR evidence; coordinate overlapping shared-skill
   edits across agents.
 
@@ -139,11 +135,42 @@ missing prerequisite rather than inventing a replacement workflow.
 Coordinate expensive builds and tests across subagents. Separate worktrees alone
 do not isolate CPU, memory, or shared test services.
 
-## 5. Follow through and report
+## 5. Group and publish the batch
 
 Monitor the subagents, handle actionable blockers, and dispatch queued work as
 slots free up. Do not stop after spawning agents. Do not repeatedly dispatch a
 ticket whose failure requires user input or an unavailable external prerequisite.
+
+Read Obsidian’s [live Approval Bot workflow](https://github.com/VantaInc/obsidian/blob/main/.github/workflows/ai-dx-pr-approval-live.yml)
+and [assessment runner](https://github.com/VantaInc/obsidian/blob/main/scripts/pr-approval/run-live-assessment.sh)
+from current `main` to identify the policy used for new approvals. Use that policy’s
+coverage rules, high-risk signals, and PR-wide limits. The current entry points are
+the [coverage policy](https://github.com/VantaInc/obsidian/blob/main/scripts/pr-approval/src/policies/placeholder-with-coverage.json)
+and [assessment registry](https://github.com/VantaInc/obsidian/blob/main/scripts/pr-approval/src/assessments/registry/definitions.ts).
+
+- Put migrations likely to qualify for Approval Bot into one PR. Put migrations
+  that need human review, including Frontdoor changes and uncertain cases, into
+  one separate PR. Create one PR if only one group has changes. Keep each
+  ticket’s migration together. Assemble each group on its own branch from the
+  updated `main` using the verified ticket commits.
+- Before creating the drafts, check the complete combined auto-approval diff
+  against the current policy. Verify coverage for every addition and deletion,
+  including generated, dependency, lockfile, TypeScript, and Bazel changes.
+  Check the combined size limit, high-risk signals, and workflow preflight
+  requirements for when the draft is ready. Move tickets with uncovered changes,
+  blocking signals, or unresolved eligibility into the human-review group. If
+  the combined diff exceeds a policy limit, move enough whole tickets to the
+  human-review group for the remaining diff to satisfy the limit. Check the
+  resulting combined diff again and record the assessment in the handoff.
+  GitHub’s live workflow makes the actual decision after the PR is ready.
+- Run the required verification on the combined branches and complete the
+  [SNOW draft PR workflow](../conner-ticket-workflow/references/snow.md#draft-pull-request)
+  for each combined diff, including the local Greptile and Codex reviews before
+  draft creation. Recheck Approval Bot eligibility if review fixes change the diff.
+  Link every included ticket in its PR and verify each ticket moves to **In
+  Progress** without moving a later status backward.
+
+## 6. Report
 
 Return a compact table with ticket link, file count, assignment, PR link or
 blocker, and validation outcome. Report skipped candidates, shortages,

@@ -24,12 +24,14 @@ with the SNOW requirements below. SNOW PRs do not require diagrams or PEX’s
 template.
 
 - Prefix the title with the actual ticket key, for example
-  `[SNOW-763] Migrate ui-kit-agent-tools tests to @vanta/testing`.
+  `[SNOW-763] Migrate ui-kit-agent-tools tests to @vanta/testing`. For a
+  multi-ticket batch PR, use the parent epic key in the title and link all
+  included tickets in the body.
 - Add the `proj-snowplow` GitHub label to every SNOW PR, including drafts and
   non-migration work, alongside the required security-risk label. Verify both
   labels after creation.
-- When creating the draft PR, move its Jira ticket to **In Progress** and verify
-  the resulting status. If already further along, do not move it backward.
+- When creating the draft PR, move each included Jira ticket to **In Progress**
+  and verify the resulting status. If already further along, do not move it backward.
 
 ## Concise PR description preference
 

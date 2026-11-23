@@ -26,7 +26,7 @@ After completing the shared review step, apply the matching project requirements
   application layers. Read [PEX PR requirements](references/pex-pr.md) for the
   body template, architecture examples, frontend evidence, and deployment rules.
 - **SNOW:** follow the [SNOW PR requirements](../conner-ticket-workflow/references/snow.md#draft-pull-request),
-  using the repository template, `[SNOW-XXX]` title prefix, `proj-snowplow` and
+  using the repository template, SNOW title prefix, `proj-snowplow` and
   security-risk labels, and Jira status transition. SNOW PRs do not require
-  diagrams or the PEX template. Apply the shared review step to every ticket's
-  PR in a Snowplow batch as well as to individually requested SNOW PRs.
+  diagrams or the PEX template. For a [Snowplow batch](../conner-snowplow-batch/SKILL.md#5-group-and-publish-the-batch),
+  apply the shared review step to each combined PR diff.
