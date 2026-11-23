@@ -1,13 +1,13 @@
 ---
 name: conner-snowplow-batch
-description: Pick up unassigned Snowplow tickets from SNOW-1320 (@vanta/testing migration), delegate the migrations, and publish one or two draft PRs grouped by Approval Bot eligibility. Use for “do a batch of Snowplow tickets”, “do more Snowplow tickets”, or a request to take on a specified number of Snowplow tickets. Not for read-only backlog inspection or implementing a single named ticket.
+description: Pick up a batch of unassigned children from a Snowplow epic given by key or Jira URL, migrate them, and open independent draft PRs. Use for “do a batch of tickets from SNOW-1318”, “do more Snowplow tickets”, or a requested batch size. For a single named child, use conner-ticket-workflow.
 ---
 
 # Pick up a Snowplow batch
 
-Select work from [SNOW-1320](https://vanta.atlassian.net/browse/SNOW-1320),
-claim it for the user, and delegate implementation and verification per ticket.
-Combine the finished changes into at most two draft PRs for the whole batch.
+Claim work from the selected epic for the user and delegate implementation and
+verification per ticket. Aim for one or two draft PRs grouped by Approval Bot
+eligibility. Open additional independent drafts whenever the size limit requires it.
 This skill authorizes delegation when invoked;
 creating or editing the skill does not start a batch.
 
@@ -16,8 +16,15 @@ creating or editing the skill does not start a batch.
 - Use the requested positive integer as the batch size. If omitted, default to
   **3** and state that choice. “More” means a new batch of unassigned tickets,
   not resuming tickets already assigned to the user.
-- Use SNOW-1320 for `@vanta/testing` migrations and state the epic alongside
-  the batch size.
+- Extract the epic key from the request or its Jira browse URL. For “more” without a new epic, reuse
+  the epic from the current batch. Default to SNOW-1320 when no epic is specified
+  or established. The numeric part of an issue key is never a batch size.
+- Set `snow_epic` to the resolved key (format `SNOW-<digits>`). Read it with
+  `acli jira workitem view "$snow_epic" --fields issuetype,summary,description --json`.
+  Verify it is a Snowplow epic and read its migration instructions and references.
+  If the supplied epic is invalid or inaccessible, report the issue. Use the
+  verified key throughout selection, claims, delegation, and PRs. State the
+  epic and batch size before searching.
 - Read the sibling `conner-ticket-workflow/SKILL.md`, its `references/snow.md`,
   and `conner-pr-workflow/SKILL.md` for the required reviews before draft creation.
   Confirm git, authenticated `acli`, subagent tools, and the repository’s required
@@ -30,21 +37,22 @@ creating or editing the skill does not start a batch.
 
 ## 2. Find and rank candidates
 
-Fetch **all pages** of unassigned, unfinished direct children of SNOW-1320:
+Fetch **all pages** of unassigned, unfinished direct children of the verified epic:
 
 ```sh
 acli jira workitem search \
-  --jql 'parent = SNOW-1320 AND assignee IS EMPTY AND statusCategory != Done' \
-  --fields key,summary,status,assignee,parent --paginate --json
+  --jql "parent = ${snow_epic} AND assignee IS EMPTY AND statusCategory != Done" \
+  --fields key,summary,status,assignee --paginate --json
 ```
 
-These are backend/frontdoor workspace migrations with 1–4 test files. Extract
+For workspace test migrations of any size, extract
 `(N files)` or `(N file)` from the summary and rank by file count ascending, then
 numeric issue key ascending. If the count is missing or ambiguous, read the
 description’s `Test files found` field; if still unknown, rank after known counts
-and report it as unknown.
+and report it as unknown. For other epics, follow any ordering in the epic
+instructions, then use ascending numeric issue key as the tie-breaker or default.
 
-Take the first X candidates. Show their keys, summaries, and file counts before
+Take up to the requested batch size. Show keys, summaries, and any file counts before
 assignment as a progress update; no additional confirmation is needed.
 If fewer are eligible, take the available candidates and report the shortfall.
 If none qualify, report that and stop without creating branches or subagents.
@@ -57,11 +65,10 @@ For each selected ticket, recheck eligibility immediately before assigning it.
 Use a constrained query so a candidate that is no longer unassigned is excluded:
 
 ```sh
-snow_epic=SNOW-1320
-snow_ticket=SNOW-763
+# Use the selected child's key as snow_ticket and the verified Jira identity as snow_assignee.
 acli jira workitem assign \
   --jql "key = ${snow_ticket} AND parent = ${snow_epic} AND assignee IS EMPTY AND statusCategory != Done" \
-  --assignee '@me' --yes --json
+  --assignee "$snow_assignee" --yes --json
 acli jira workitem view "$snow_ticket" --fields summary,description,assignee,status,parent --json
 ```
 
@@ -74,6 +81,12 @@ skip it and select the next eligible ticket from a refreshed ranking. Do not
 dispatch an agent without verified ownership. Report partial assignment failures;
 do not silently unassign successfully claimed tickets or repeatedly retry a
 failing mutation.
+
+After confirming ownership, move tickets in a To Do category to **In Progress**
+with `acli jira workitem transition --key "$snow_ticket" --status "In Progress" --yes`.
+Read each ticket back and verify its epic, owner, and status before dispatch.
+Preserve later statuses. If a transition fails, reconcile the current state and
+report any blocked claim while continuing the others.
 
 ## 4. Delegate one ticket per subagent
 
@@ -93,12 +106,12 @@ repository tooling; pass absolute skill paths when the local copies are untracke
 Give each subagent:
 
 - Its exact ticket key, Jira URL, parent epic, migration type, and fetched
-  summary/description, including the canonical workspace and path.
+  summary/description, affected paths, and applicable instructions from the epic.
 - Its exclusive worktree path and branch, plus the updated base revision. State
   that the parent completed default-branch and branch setup, so the agent should
   continue at ticket loading/scope confirmation rather than redo checkout steps.
 - Instructions to follow the implementation guidance in `conner-ticket-workflow`,
-  `references/snow.md`, and the repository migration skill selected below.
+  `references/snow.md`, and the migration guidance for its epic and ticket.
   SNOW work needs no plan-mode gate, PEX template, or diagrams.
 - Implement, run the required verification, and commit locally. Leave publishing,
   combined-diff reviews, and Jira status transitions to the parent.
@@ -106,7 +119,12 @@ Give each subagent:
   return its commit SHA(s), validation results, migration evidence required by
   the selected skill, and any blockers.
 
-### Perform the @vanta/testing migration
+### Follow the migration instructions
+
+Use the epic instructions together with the child ticket’s scope and acceptance
+criteria. For other migration types, follow the referenced workflow and checks,
+resolving any named skill in the repository catalog. Apply the following steps
+when the work is an `@vanta/testing` entrypoint migration.
 
 Load `skills/workflows/migrate-to-vanta-testing/SKILL.md` from the updated
 Obsidian checkout (or its installed skill path) and its classification, verification,
@@ -148,31 +166,30 @@ coverage rules, high-risk signals, and PR-wide limits. The current entry points 
 the [coverage policy](https://github.com/VantaInc/obsidian/blob/main/scripts/pr-approval/src/policies/placeholder-with-coverage.json)
 and [assessment registry](https://github.com/VantaInc/obsidian/blob/main/scripts/pr-approval/src/assessments/registry/definitions.ts).
 
-- Put migrations likely to qualify for Approval Bot into one PR. Put migrations
-  that need human review, including Frontdoor changes and uncertain cases, into
-  one separate PR. Create one PR if only one group has changes. Keep each
-  ticket’s migration together. Assemble each group on its own branch from the
-  updated `main` using the verified ticket commits.
-- Before creating the drafts, check the complete combined auto-approval diff
-  against the current policy. Verify coverage for every addition and deletion,
-  including generated, dependency, lockfile, TypeScript, and Bazel changes.
-  Check the combined size limit, high-risk signals, and workflow preflight
-  requirements for when the draft is ready. Move tickets with uncovered changes,
-  blocking signals, or unresolved eligibility into the human-review group. If
-  the combined diff exceeds a policy limit, move enough whole tickets to the
-  human-review group for the remaining diff to satisfy the limit. Check the
-  resulting combined diff again and record the assessment in the handoff.
-  GitHub’s live workflow makes the actual decision after the PR is ready.
-- Run the required verification on the combined branches and complete the
-  [SNOW draft PR workflow](../conner-ticket-workflow/references/snow.md#draft-pull-request)
-  for each combined diff, including the local Greptile and Codex reviews before
-  draft creation. Recheck Approval Bot eligibility if review fixes change the diff.
-  Link every included ticket in its PR and verify each ticket moves to **In
-  Progress** without moving a later status backward.
+- Group verified changes by likely Approval Bot eligibility. Frontdoor changes,
+  uncovered paths, high-risk signals, and uncertain cases go to human review.
+  Check coverage for the complete diff, including generated files, dependency
+  changes, lockfiles, TypeScript, and Bazel files. Check current workflow preflight
+  requirements and record the assessment for each final diff. The live workflow makes the
+  actual decision after the draft is ready.
+- Start with one draft per nonempty group. Apply the [migration PR size limit](../conner-ticket-workflow/references/snow.md#migration-pr-size)
+  to **both** groups. Split at ticket boundaries first. If a single ticket is
+  too large, split it by independently testable workspaces or sets of files.
+  Include the dependencies and configuration each slice needs to pass on its
+  own. Account for every ticket’s full scope across its drafts.
+- Assemble each PR on its own branch from updated `main` and target `main`
+  directly. Each must build, pass its checks, and be mergeable in any order.
+  If a change cannot be divided into independently valid PRs under the cap,
+  report the specific blocker and continue with the other work.
+- Run scoped verification and the [SNOW draft PR workflow](../conner-ticket-workflow/references/snow.md#draft-pull-request)
+  on each resulting diff, including local Greptile and Codex reviews. Recheck
+  size and Approval Bot eligibility after review fixes or regrouping. Link every
+  included ticket in each draft and verify its owner and In Progress or later status.
 
 ## 6. Report
 
-Return a compact table with ticket link, file count, assignment, PR link or
-blocker, and validation outcome. Report skipped candidates, shortages,
-and claimed tickets that could not be completed. Distinguish draft PR creation
+Return a compact table with ticket link, file count if applicable, assignment,
+status, all associated draft PR links or blocker, and validation outcome. Include
+each PR’s changed-line total. Report skipped candidates, shortages, and claimed
+tickets that could not be completed. Distinguish draft PR creation
 from merge readiness; ongoing PR babysitting is a separate workflow.

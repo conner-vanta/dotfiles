@@ -30,8 +30,24 @@ template.
 - Add the `proj-snowplow` GitHub label to every SNOW PR, including drafts and
   non-migration work, alongside the required security-risk label. Verify both
   labels after creation.
-- When creating the draft PR, move each included Jira ticket to **In Progress**
-  and verify the resulting status. If already further along, do not move it backward.
+- For batches, move claimed tickets to **In Progress** at pickup and verify
+  their status again at draft creation. For individual tickets, move to
+  **In Progress** at draft creation and verify the resulting status. Preserve
+  later statuses.
+
+## Migration PR size
+
+Every Snowplow migration PR must have **fewer than 1,000 changed lines**
+(additions plus deletions across the entire PR). This is a condition for AI
+auto-approval and also applies to migration PRs that need human review.
+
+Measure the committed branch against its merge base with updated `origin/main`,
+for example with `git diff --find-renames --shortstat origin/main...HEAD`.
+At 1,000 or more, split the work into as many independently verifiable PRs as
+needed, each branching from and targeting `main` directly. Recheck the final
+diff before publishing each draft. Confirm GitHub’s count and base with
+`gh pr view <PR> --json additions,deletions,baseRefName`. If GitHub reports an
+oversized diff, resize the draft and verify and review the resulting diffs again.
 
 ## Concise PR description preference
 

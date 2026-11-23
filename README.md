@@ -11,13 +11,15 @@ for both PEX and SNOW, including each PR in a Snowplow batch. It bundles the
 [Ona review commands](.agents/skills/conner-pr-workflow/references/local-ai-reviews.md)
 from the AI Code Reviews Guru card alongside its architecture diagram examples.
 
-Say “pick up a new batch of snowplow tickets” or “do more snowplow tickets” to
-use `conner-snowplow-batch`. It defaults to three tickets, or accepts an explicit
-count, ranks unassigned SNOW-1320 children by test-file count, assigns them to
-you, and delegates each @vanta/testing migration to a subagent in a separate
-worktree. The batch produces one or two draft PRs grouped by Approval Bot
-eligibility. For example, say “do 5 more
-snowplow tickets” or “use $conner-snowplow-batch to migrate 3 tickets”.
+Say “do a batch of tickets from SNOW-1318” or supply the epic’s Jira URL.
+`conner-snowplow-batch` picks three unassigned children by default. Give a
+count to override it, for example “do 5 tickets from SNOW-1318”. “Do more
+Snowplow tickets” continues with the same epic, or defaults to SNOW-1320 when
+no epic is in context. The skill assigns the tickets to you, moves them to
+In Progress, and follows the epic and ticket instructions in separate worktrees.
+It normally opens one or two draft PRs grouped by Approval Bot eligibility.
+Every migration PR stays under 1,000 additions plus deletions. Larger batches
+or tickets get additional independent drafts, each targeting `main`.
 
 The layout follows the [Agent Skills specification](https://agentskills.io/specification)
 and [creation guidance](https://agentskills.io/skill-creation/best-practices).
