@@ -1,0 +1,19 @@
+AGENTS.override.md
+  s_d2771ce36f2d0c::t_67ca93a97501d4 15-18
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.9",
+  "base_commit_sha": "c79f7a6dbbaebf3609ba1e24209ea3c8b278c74b",
+  "prompts": {},
+  "sessions": {
+    "s_d2771ce36f2d0c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a20e4a-15e3-71b2-89ef-a3d13b59e808",
+        "model": "gpt-6.2-sol"
+      },
+      "human_author": "Conner S <conner.smith@vanta.com>"
+    }
+  }
+}
