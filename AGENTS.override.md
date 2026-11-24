@@ -12,3 +12,7 @@ Run relevant validation and keep Git hooks enabled.
 # Authentication / Authorization Issues
 
 If you run into any authentication / authorization issues with GitHub, Datadog, or any other service, then load the Ona shell exports and then try again. Usually this means an environment variables isn't set. Loading the shell exports will set the environment variables.
+
+# Pull request labels
+
+Do not add the `requires-human-review` label to any pull request.
