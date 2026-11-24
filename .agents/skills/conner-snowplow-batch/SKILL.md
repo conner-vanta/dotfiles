@@ -1,6 +1,6 @@
 ---
 name: conner-snowplow-batch
-description: Pick up a batch of unassigned children from a Snowplow epic given by key or Jira URL, migrate them, and open independent draft PRs. Use for “do a batch of tickets from SNOW-1318”, “do more Snowplow tickets”, or a requested batch size. For a single named child, use conner-ticket-workflow.
+description: Pick up a batch of unassigned children from a Snowplow epic given by key or Jira URL, migrate them, and mark each independent PR ready for review after CI passes. Use for “do a batch of tickets from SNOW-1318”, “do more Snowplow tickets”, or a requested batch size. For a single named child, use conner-ticket-workflow.
 ---
 
 # Pick up a Snowplow batch
@@ -186,10 +186,25 @@ and [assessment registry](https://github.com/VantaInc/obsidian/blob/main/scripts
   size and Approval Bot eligibility after review fixes or regrouping. Link every
   included ticket in each draft and verify its owner and In Progress or later status.
 
-## 6. Report
+## 6. Mark each PR ready for review after CI
+
+When I ask you to do a Snowplow batch, I explicitly request that you mark each
+PR ready for review once its draft CI passes. If I ask you to keep the PRs in
+draft or give an earlier stopping point, honor that request.
+
+Monitor each draft’s CI on its latest commit. Fix actionable failures, run
+relevant validation, push the fixes, and check CI again on the new commit.
+As soon as the CI checks that run on drafts pass for a PR, run
+`gh pr ready <PR-URL>` and verify that `gh pr view <PR-URL> --json isDraft`
+returns `isDraft: false`. Promote each PR independently. Approval Bot evaluates
+the PR after promotion. If a PR is blocked, record the reason and continue with
+the others.
+
+## 7. Report
 
 Return a compact table with ticket link, file count if applicable, assignment,
-status, all associated draft PR links or blocker, and validation outcome. Include
-each PR’s changed-line total. Report skipped candidates, shortages, and claimed
-tickets that could not be completed. Distinguish draft PR creation
-from merge readiness; ongoing PR babysitting is a separate workflow.
+Jira status, all associated PR links or blocker, and validation outcome. Include
+each PR’s changed-line total and verified review state. For any PR still in
+draft, give the reason. Report skipped candidates, shortages, and claimed
+tickets that could not be completed. Babysitting after promotion is a separate
+workflow.
